@@ -7,13 +7,26 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    
-    <div id="header-placeholder"></div>
-    <div id="navbar-placeholder"></div>
+    <header>
+        <h1>Bản Sắc Việt</h1>
+        <p>Nơi hội tụ tinh hoa văn hóa Việt</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="../index.html">Trang Chủ</a></li>
+            <li><a href="gioi-thieu.html">Giới Thiệu</a></li>
+            <li><a href="cac-dan-toc.html" class="active">Các Dân Tộc</a></li>
+            <li><a href="ban-do.html">Bản Đồ Văn Hóa</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="lien-he.html">Liên Hệ</a></li>
+        </ul>
+    </nav>
 
     <div class="container">
         <main class="main-content">
             <h2>Chào Bạn Đến Với Văn Hóa Dân Tộc Kinh</h2>
+            
             <img src="../images/kinh/logo-dan-toc.jpg" alt="Văn hóa Dân tộc Kinh" class="hero-image">
             
             <p style="font-size: 1.2em; font-style: italic;">
@@ -89,7 +102,7 @@
                              </div>
                         </li>
                         <li class="media-list-item">
-                             <img src="../images/kinh/quan-ho.jpg" alt="Quan Họ">
+                             <img src="../images/kinh/banh-chung.jpg" alt="Quan Họ">
                              <div class="media-content">
                                 <strong>Hát Quan Họ:</strong> Hình thức hát giao duyên đặc trưng của người Kinh ở vùng Kinh Bắc (Bắc Ninh, Bắc Giang).
                              </div>
@@ -101,28 +114,8 @@
         </main>
     </div>
 
-    <div id="footer-placeholder"></div>
-
-    <script>
-        async function loadHTML(placeholderId, filePath) {
-            try {
-                const response = await fetch(filePath);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const html = await response.text();
-                document.getElementById(placeholderId).innerHTML = html;
-            } catch (error) {
-                console.error(`Could not load ${filePath}:`, error);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // Đường dẫn đến các file include (từ góc nhìn của dan-toc-kinh.html)
-            loadHTML('header-placeholder', '../includes/header.html');
-            loadHTML('navbar-placeholder', '../includes/navbar.html');
-            loadHTML('footer-placeholder', '../includes/footer.html');
-        });
-    </script>
+    <footer>
+        <p>&copy; 2025 Bản Sắc Việt. Bảo lưu mọi quyền.</p>
+    </footer>
 </body>
 </html>
