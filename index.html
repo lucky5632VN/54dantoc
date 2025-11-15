@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bản Sắc Việt - Trang Chủ</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    
+    <div id="header-placeholder"></div>
+    <div id="navbar-placeholder"></div>
+
+    <div class="hero" style="background-image: url('images/hero-trang-chu.jpg');">
+        <h2>Chào mừng đến với Cội Nguồn Việt</h2>
+        <p>Khám phá di sản văn hóa và đạo đức phong phú của 54 dân tộc anh em.</p>
+        <br>
+        <a href="pages/cac-dan-toc.html" class="cta-button">Khám Phá Ngay</a>
+    </div>
+
+    <div class="container">
+        <main class="main-content">
+            <h2>Về Dự Án</h2>
+            <p>Dự án "Bản Sắc Việt" được sinh ra với một sứ mệnh duy nhất: trở thành một thư viện số toàn diện, lưu giữ và lan tỏa vẻ đẹp văn hóa, đạo đức truyền thống của 54 dân tộc Việt Nam.</p>
+        </main>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Hàm để tải nội dung từ một file HTML và chèn vào placeholder
+        async function loadHTML(placeholderId, filePath) {
+            try {
+                const response = await fetch(filePath);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const html = await response.text();
+                document.getElementById(placeholderId).innerHTML = html;
+            } catch (error) {
+                console.error(`Could not load ${filePath}:`, error);
+            }
+        }
+
+        // Tải các phần chung khi DOM đã sẵn sàng
+        document.addEventListener('DOMContentLoaded', () => {
+            // Đường dẫn đến các file include (từ góc nhìn của index.html)
+            loadHTML('header-placeholder', 'includes/header.html');
+            loadHTML('navbar-placeholder', 'includes/navbar.html');
+            loadHTML('footer-placeholder', 'includes/footer.html');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hai Bản Đồ Tương Tác - Bản Sắc Việt</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Bản Sắc Việt</h1>
+        <p>Nơi hội tụ tinh hoa văn hóa Việt</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="../index.html">Trang Chủ</a></li>
+            <li><a href="gioi-thieu.html">Giới Thiệu</a></li>
+            <li><a href="cac-dan-toc.html">Các Dân Tộc</a></li>
+            <li><a href="ban-do.html" class="active">Bản Đồ Văn Hóa</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="lien-he.html">Liên Hệ</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <main class="main-content">
+            <h2>Bản Đồ Tương Tác Văn Hóa Việt Nam</h2>
+            <p>Khám phá văn hóa Việt Nam qua hai dạng bản đồ tương tác khác nhau.</p>
+
+            <section class="map-section">
+                
+                <div class="map-interactive-container">
+                    <h3>Bản Đồ Phương Ngữ & Vùng Văn Hóa</h3>
+                    <div class="map-image-wrapper">
+                        <img 
+                            src="../images/ban-do-mau.png" 
+                            alt="Bản đồ phương ngữ Việt Nam"
+                            usemap="#vietnam-region-map" 
+                            class="map-image"
+                        >
+                        
+                        <map name="vietnam-region-map">
+                            <area 
+                                shape="poly" 
+                                coords="180,20, 300,40, 350,150, 200,280, 100,200, 120,100" 
+                                href="#" 
+                                alt="Miền Bắc"
+                                data-region="north">
+                            <area 
+                                shape="poly" 
+                                coords="200,280, 350,150, 380,300, 300,450, 220,400" 
+                                href="#" 
+                                alt="Miền Trung"
+                                data-region="central">
+                            <area 
+                                shape="poly" 
+                                coords="220,400, 300,450, 380,300, 420,500, 300,700, 200,600" 
+                                href="#" 
+                                alt="Miền Nam"
+                                data-region="south">
+                        </map>
+                    </div>
+                    <div class="map-info-sidebar">
+                        <h4 id="region-info-title">Chọn một vùng trên bản đồ</h4>
+                        <p id="region-info-description">Thông tin về phương ngữ và các dân tộc chính trong vùng sẽ xuất hiện ở đây.</p>
+                        <ul id="region-info-ethnic-list"></ul>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Bản Sắc Việt. Bảo lưu mọi quyền.</p>
+    </footer>
+
+    <script>
+        // --- SCRIPT CHO BẢN ĐỒ 1: THEO VÙNG ĐỊA LÝ (PHƯƠNG NGỮ) ---
+        
+        // === THAY ĐỔI 1: CẬP NHẬT CẤU TRÚC DỮ LIỆU ===
+        // Thay vì mảng chuỗi, giờ là mảng các đối tượng {name, url}
+        const regionData = {
+            north: {
+                title: "Phương ngữ Bắc (Miền Bắc)",
+                description: "Vùng đất cội nguồn, là địa bàn cư trú lâu đời của nhiều dân tộc:",
+                ethnicGroups: [
+                    { name: "Kinh", url: "dan-toc-kinh.html" }, // Có link thật
+                    { name: "Tày", url: "#" },                  // Chưa có link
+                    { name: "Nùng", url: "#" },
+                    { name: "Mường", url: "#" },
+                    { name: "Dao", url: "#" },
+                    { name: "H'Mông", url: "#" }
+                ]
+            },
+            central: {
+                title: "Phương ngữ Trung (Bắc Trung Bộ)",
+                description: "Từ Thanh Hóa tới Thừa Thiên-Huế:",
+                ethnicGroups: [
+                    { name: "Kinh", url: "dan-toc-kinh.html" },
+                    { name: "Chăm", url: "#" },
+                    { name: "Bru-Vân Kiều", url: "#" },
+                    { name: "Cơ Tu", url: "#" }
+                ]
+            },
+            south: {
+                title: "Phương ngữ Nam (Nam Trung Bộ & Nam Bộ)",
+                description: "Từ Đà Nẵng tới Cà Mau:",
+                ethnicGroups: [
+                    { name: "Kinh", url: "dan-toc-kinh.html" },
+                    { name: "Khmer", url: "#" },
+                    { name: "Hoa", url: "#" },
+                    { name: "Chăm", url: "#" },
+                    { name: "Stiêng", url: "#" },
+                    { name: "Mạ", url: "#" }
+                ]
+            }
+        };
+
+        const mapAreas = document.querySelectorAll("map[name='vietnam-region-map'] area");
+        const regionInfoTitle = document.getElementById("region-info-title");
+        const regionInfoDescription = document.getElementById("region-info-description");
+        const regionInfoList = document.getElementById("region-info-ethnic-list");
+
+        mapAreas.forEach(area => {
+            area.addEventListener("click", function(e) {
+                e.preventDefault();
+                const regionKey = this.dataset.region;
+                const data = regionData[regionKey];
+
+                regionInfoTitle.innerHTML = data.title;
+                regionInfoDescription.innerHTML = data.description;
+                regionInfoList.innerHTML = ""; // Xóa danh sách cũ
+                
+                // === THAY ĐỔI 2: TẠO LINK (thẻ <a>) TRONG DANH SÁCH ===
+                data.ethnicGroups.forEach(ethnic => {
+                    const li = document.createElement("li");
+                    
+                    // Tạo một thẻ <a>
+                    const a = document.createElement("a");
+                    a.textContent = ethnic.name; // Tên dân tộc
+                    a.href = ethnic.url;         // Đường dẫn
+                    
+                    // Nếu link là "#" (chưa làm), thêm class để CSS
+                    if (ethnic.url === "#") {
+                        a.classList.add("page-not-ready");
+                        a.title = "Trang này đang được xây dựng";
+                    }
+                    
+                    li.appendChild(a); // Đặt thẻ <a> vào trong <li>
+                    regionInfoList.appendChild(li); // Đặt <li> vào <ul>
+                });
+            });
+        });
+
+        const markerMapWrapper = document.getElementById("marker-map-wrapper");
+        const markerBaseMap = document.getElementById("marker-base-map");
+        const markerPopup = document.getElementById("marker-popup");
+        const markerPopupTitle = document.getElementById("marker-popup-title");
+        const markerPopupDescription = document.getElementById("marker-popup-description");
+        const markerSidebarTitle = document.getElementById("marker-sidebar-title");
+        const markerSidebarDescription = document.getElementById("marker-sidebar-description");
+        const markerSidebarList = document.getElementById("marker-sidebar-list");
+
+        // !!! TỰ ĐIỀU CHỈNH TỌA ĐỘ (x, y) NÀY CHO ĐÚNG VỚI ẢNH CỦA BẠN !!!
+        const markerPositions = {
+            hanoi:    { x: 32, y: 16 }, // (x=32% từ trái, y=16% từ trên)
+            hue:      { x: 38, y: 38 },
+            hcmc:     { x: 40, y: 78 }
+        };
+
+        function placeMarkers() {
+            document.querySelectorAll('.map-marker').forEach(m => m.remove());
+            for (const key in markerPositions) {
+                const pos = markerPositions[key];
+                const marker = document.createElement("div");
+                marker.classList.add("map-marker");
+                marker.style.left = `${pos.x}%`;
+                marker.style.top = `${pos.y}%`;
+                marker.dataset.marker = key;
+                marker.textContent = markerData[key].name.charAt(0); // Chữ cái đầu
+
+                marker.addEventListener("click", function(e) {
+                    e.stopPropagation();
+                    const data = markerData[this.dataset.marker];
+                    
+                    markerPopupTitle.textContent = data.name;
+                    markerPopupDescription.textContent = data.description;
+                    
+                    const rect = this.getBoundingClientRect();
+                    const wrapperRect = markerMapWrapper.getBoundingClientRect();
+                    markerPopup.style.left = `${rect.left + rect.width / 2 - wrapperRect.left}px`;
+                    markerPopup.style.top = `${rect.top - wrapperRect.top}px`;
+                    markerPopup.classList.add("active");
+
+                    markerSidebarTitle.textContent = `Thông tin về ${data.name}`;
+                    markerSidebarDescription.textContent = data.description;
+                    markerSidebarList.innerHTML = "";
+                    data.cultureHighlights.forEach(highlight => {
+                        const li = document.createElement("li");
+                        li.textContent = highlight;
+                        markerSidebarList.appendChild(li);
+                    });
+                });
+                markerMapWrapper.appendChild(marker);
+            }
+        }
+
+        markerMapWrapper.addEventListener("click", function(e) {
+            if (!e.target.closest('.map-marker')) {
+                resetMarkerSidebar();
+            }
+        });
+
+        markerBaseMap.addEventListener('load', () => {
+            placeMarkers();
+            resetMarkerSidebar(); // Sửa lỗi: Đặt trạng thái ban đầu
+        });
+        window.addEventListener('resize', placeMarkers);
+
+        if (markerBaseMap.complete && markerBaseMap.naturalHeight > 0) {
+            placeMarkers();
+            resetMarkerSidebar(); // Sửa lỗi: Đặt trạng thái ban đầu
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<footer>
+    <p>&copy; 2025 Bản Sắc Việt. Bảo lưu mọi quyền.</p>
+</footer>
+
+<div id="image-lightbox" class="lightbox-overlay">
+    <span class="lightbox-close">&times;</span>
+    <img class="lightbox-content" id="lightbox-img" src="" alt="Ảnh phóng to">
+</div>
+
+<div id="settings-modal" class="settings-modal-overlay">
+    <div class="settings-content">
+        <span class="settings-close-button">&times;</span>
+        <h3>Cài Đặt Hiển Thị</h3>
+        
+        <div class="setting-item">
+            <label for="theme-toggle-switch">Chế độ Tối (Dark Mode)</label>
+            <label class="toggle-switch">
+                <input type="checkbox" id="theme-toggle-switch">
+                <span class="slider"></span>
+            </label>
+        </div>
+        
+        <div class="setting-item">
+             <label>Cỡ chữ (Sắp có)</label>
+             <span style="opacity: 0.5;">...</span>
+        </div>
+        
+    </div>
+</div>
+
+<button id="settings-open-button">⚙️</button>
+
+<script>
+    // --- JavaScript cho Lightbox ---
+    document.addEventListener('DOMContentLoaded', () => {
+        const lightbox = document.getElementById('image-lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.querySelector('.lightbox-close');
+        
+        // Cần lắng nghe sự kiện trên toàn bộ document vì ảnh được tải động
+        document.body.addEventListener('click', (e) => {
+            if (e.target && e.target.matches('.media-list-item img')) {
+                const imgSrc = e.target.getAttribute('src');
+                lightboxImg.setAttribute('src', imgSrc);
+                lightbox.classList.add('active');
+            }
+        });
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+        }
+
+        if (lightboxClose) { // Đảm bảo nút đóng tồn tại
+            lightboxClose.addEventListener('click', closeLightbox);
+        }
+        if (lightbox) { // Đảm bảo lightbox tồn tại
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+        }
+    });
+
+
+    // --- JavaScript cho Settings Modal và Dark Mode ---
+    document.addEventListener('DOMContentLoaded', () => {
+        const body = document.body;
+        const settingsOpenBtn = document.getElementById('settings-open-button');
+        const settingsModal = document.getElementById('settings-modal');
+        const settingsCloseBtn = document.querySelector('.settings-close-button');
+        const toggleSwitch = document.getElementById('theme-toggle-switch');
+
+        // Hàm áp dụng theme
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                body.classList.add('dark-mode');
+                if (toggleSwitch) toggleSwitch.checked = true; // Cập nhật trạng thái công tắc
+            } else {
+                body.classList.remove('dark-mode');
+                if (toggleSwitch) toggleSwitch.checked = false; // Cập nhật trạng thái công tắc
+            }
+        }
+
+        // Tải theme đã lưu
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        applyTheme(savedTheme);
+
+        // Sự kiện cho công tắc
+        if (toggleSwitch) {
+            toggleSwitch.addEventListener('change', () => {
+                let newTheme = toggleSwitch.checked ? 'dark' : 'light';
+                localStorage.setItem('theme', newTheme);
+                applyTheme(newTheme);
+            });
+        }
+
+        // Sự kiện đóng/mở bảng cài đặt
+        if (settingsOpenBtn) {
+            settingsOpenBtn.addEventListener('click', () => {
+                settingsModal.classList.add('active');
+            });
+        }
+
+        if (settingsCloseBtn) {
+            settingsCloseBtn.addEventListener('click', () => {
+                settingsModal.classList.remove('active');
+            });
+        }
+
+        // Đóng khi click ra nền mờ
+        if (settingsModal) {
+            settingsModal.addEventListener('click', (e) => {
+                if (e.target === settingsModal) {
+                    settingsModal.classList.remove('active');
+                }
+            });
+        }
+
+        // --- Active nav link ---
+        // Lấy đường dẫn hiện tại của trang
+        const currentPath = window.location.pathname;
+        const pageName = currentPath.split('/').pop(); // Ví dụ: index.html hoặc dan-toc-kinh.html
+
+        // Xác định ID của link cần active dựa trên pageName
+        let activeLinkId;
+        if (pageName === 'index.html' || pageName === '') { // Trang chủ
+            activeLinkId = 'nav-home';
+        } else if (pageName === 'gioi-thieu.html') {
+            activeLinkId = 'nav-gioithieu';
+        } else if (pageName === 'cac-dan-toc.html') {
+            activeLinkId = 'nav-dantoc';
+        } else if (pageName === 'ban-do-tuong-tac.html') {
+            activeLinkId = 'nav-bando';
+        } else if (pageName === 'blog.html') {
+            activeLinkId = 'nav-blog';
+        } else if (pageName === 'lien-he.html') {
+            activeLinkId = 'nav-lienhe';
+        }
+        
+        // Thêm class 'active'
+        if (activeLinkId) {
+            const activeLink = document.getElementById(activeLinkId);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+    });
+</script>

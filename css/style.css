@@ -1,0 +1,562 @@
+/* === CÀI ĐẶT CHUNG === */
+body {
+    font-family: 'Arial', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 25px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+a {
+    text-decoration: none;
+    color: #8B0000;
+}
+
+/* === HEADER (ĐẦU TRANG) === */
+header {
+    background-color: #8B0000; /* Màu đỏ đậm (Màu chính) */
+    color: white;
+    padding: 20px 40px;
+    text-align: center;
+    border-bottom: 5px solid #f0c040; /* Màu vàng đồng (Màu phụ) */
+}
+header h1 {
+    margin: 0;
+    font-size: 2.8em;
+    font-weight: bold;
+}
+header p {
+    font-size: 1.1em;
+    font-style: italic;
+    margin: 5px 0 0 0;
+    opacity: 0.9;
+}
+
+/* === NAV (THANH ĐIỀU HƯỚNG) === */
+nav {
+    background-color: #333;
+}
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 16px 22px;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+nav li a:hover {
+    background-color: #f0c040;
+    color: #333;
+}
+nav li a.active {
+    background-color: #f0c040;
+    color: #333;
+}
+
+/* === NỘI DUNG CHÍNH (MAIN CONTENT) === */
+.main-content {
+    padding: 10px;
+}
+.main-content h2 {
+    color: #8B0000;
+    border-bottom: 2px solid #f0c040;
+    padding-bottom: 10px;
+    font-size: 2.2em;
+    margin-top: 0;
+}
+.main-content h3 {
+    color: #333;
+    font-size: 1.8em;
+    margin-top: 30px;
+}
+.main-content p {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+
+/* === FOOTER (CHÂN TRANG) === */
+footer {
+    text-align: center;
+    padding: 25px;
+    background-color: #333;
+    color: white;
+    margin-top: 30px;
+}
+
+/* === TRANG CHỦ: HERO SECTION === */
+.hero {
+    background-size: cover;
+    background-position: center;
+    padding: 80px 20px;
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+.hero h2 {
+    color: white;
+    font-size: 2.5em;
+    border: none;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+.hero p {
+    font-size: 1.2em;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+.cta-button {
+    background-color: #f0c040;
+    color: #333;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: transform 0.3s ease;
+}
+.cta-button:hover {
+    transform: scale(1.05);
+}
+
+/* === TRANG CÁC DÂN TỘC: GRID LAYOUT === */
+.ethnic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+.ethnic-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: hidden; /* Quan trọng để bo góc ảnh */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.ethnic-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.ethnic-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+.ethnic-card-content {
+    padding: 20px;
+}
+.ethnic-card-content h3 {
+    margin-top: 0;
+    font-size: 1.5em;
+}
+.ethnic-card-content p {
+    font-size: 0.95em;
+    margin-bottom: 15px;
+}
+.ethnic-card-content a {
+    background-color: #8B0000;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* === TRANG DÂN TỘC KINH: MODULE NỘI DUNG === */
+.hero-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+.module {
+    margin-bottom: 30px;
+    padding: 25px;
+    background-color: #fafafa;
+    border-left: 5px solid #f0c040;
+    border-radius: 0 8px 8px 0;
+}
+.module-title {
+    font-size: 2em;
+    color: #8B0000;
+    margin-top: 0;
+}
+.module-content ul {
+    /* === SỬA LỖI EMOJI 1 === */
+    list-style-type: '✨';
+    padding-left: 25px;
+}
+.module-content li {
+    padding-left: 10px;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+/* === TRANG LIÊN HỆ: FORM === */
+.contact-form {
+    max-width: 700px;
+    margin: 0 auto;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group label {
+    display: block;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box; /* Rất quan trọng */
+}
+.form-group textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+.submit-btn {
+    background-color: #8B0000;
+    color: white;
+    padding: 12px 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.submit-btn:hover {
+    background-color: #6a0000;
+}
+
+/* === CSS CHO TRANG BẢN ĐỒ (IMAGE MAP) === */
+.map-interactive-container {
+    display: flex;
+    flex-wrap: wrap; /* Cho phép xuống hàng trên di động */
+    gap: 20px;
+    border: 1px solid #eee;
+    padding: 20px;
+    border-radius: 8px;
+}
+.map-image-wrapper {
+    flex: 2; /* Ảnh chiếm 2 phần */
+    min-width: 300px;
+    position: relative; /* Cần thiết cho image map */
+}
+.map-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.map-info-sidebar {
+    flex: 3; /* Khung thông tin chiếm 3 phần */
+    min-width: 300px;
+    background: #fafafa;
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+.map-info-sidebar h3 {
+    margin-top: 0;
+    color: #8B0000;
+}
+.map-info-sidebar ul {
+    /* === SỬA LỖI EMOJI 2 === */
+    list-style-type: '▶';
+    padding-left: 25px;
+}
+.map-info-sidebar li {
+    font-size: 1.1em;
+    padding-left: 10px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+/* Làm cho các vùng "tàng hình" hiện con trỏ chuột */
+map[name='vietnam-map-areas'] area {
+    cursor: pointer;
+}
+
+/* === CSS CHO DANH SÁCH DÂN TỘC TƯƠNG TÁC (TRONG BẢN ĐỒ) === */
+.map-info-sidebar ul {
+    /* (Đoạn này đã có, nhưng để đây cho chắc) */
+    list-style-type: '▶';
+    padding-left: 20px;
+}
+.map-info-sidebar li {
+    padding-left: 8px; /* Thêm khoảng cách sau mũi tên */
+    margin-bottom: 5px;
+}
+.map-info-sidebar li a {
+    text-decoration: none;
+    color: #333; /* Màu chữ thường */
+    font-weight: bold;
+    transition: color 0.2s;
+    font-size: 1em;
+}
+.map-info-sidebar li a:hover {
+    color: #8B0000; /* Màu đỏ khi hover */
+    text-decoration: underline;
+}
+
+/* Style cho các link chưa có trang (để người dùng biết) */
+.map-info-sidebar li a.page-not-ready {
+    color: #777; /* Màu xám */
+    cursor: not-allowed; /* Biểu tượng cấm */
+    text-decoration: none;
+}
+.map-info-sidebar li a.page-not-ready:hover {
+    color: #777; /* Vẫn là màu xám khi hover */
+}
+
+/* === CSS CHO DANH SÁCH MEDIA (CÓ ẢNH) TRANG CHI TIẾT === */
+
+/* Bỏ dấu đầu dòng của danh sách cũ */
+.module-content ul {
+    list-style-type: '✨'; /* Dấu sao này vẫn giữ cho các list không có ảnh */
+    padding-left: 25px;
+}
+
+/* Định dạng cho danh sách MỚI có ảnh */
+.media-list {
+    list-style-type: none; /* Bỏ hoàn toàn dấu đầu dòng */
+    padding-left: 0; /* Bỏ đệm trái */
+}
+
+/* Định dạng cho MỖI MỤC trong danh sách */
+.media-list-item {
+    display: flex;          /* Dùng Flexbox để căn chỉnh */
+    align-items: center;    /* Căn giữa ảnh và chữ theo chiều dọc */
+    margin-bottom: 20px;    /* Khoảng cách giữa các mục */
+    background: #fff;       /* Nền trắng (nếu nền module là xám) */
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid #eee;
+}
+
+/* Định dạng cho ẢNH */
+.media-list-item img {
+    width: 100px;           /* Chiều rộng cố định */
+    height: 80px;           /* Chiều cao cố định */
+    object-fit: cover;      /* Đảm bảo ảnh lấp đầy, không bị méo */
+    border-radius: 8px;
+    margin-right: 15px;     /* Khoảng cách giữa ảnh và chữ */
+}
+
+/* Định dạng cho NỘI DUNG CHỮ */
+.media-list-item .media-content {
+    flex: 1; /* Cho phép nội dung chữ chiếm hết phần còn lại */
+    font-size: 1.05em;
+}
+
+/* Làm cho phần text <strong> không bị dính vào mô tả */
+.media-list-item .media-content strong {
+    margin-right: 5px;
+}
+
+/* === CSS CHO LIGHTBOX (XEM ẢNH) === */
+
+/* Thêm con trỏ chuột và hiệu ứng cho ảnh có thể click */
+.media-list-item img {
+    cursor: zoom-in; /* Đổi con trỏ chuột thành kính lúp */
+    transition: transform 0.2s ease;
+}
+
+.media-list-item img:hover {
+    transform: scale(1.05); /* Phóng to nhẹ khi di chuột */
+}
+
+/* Lớp nền mờ che toàn màn hình */
+.lightbox-overlay {
+  display: none; /* Ẩn ban đầu */
+  position: fixed; /* Vị trí cố định, che toàn màn hình */
+  z-index: 1000; /* Nằm trên cùng */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85); /* Màu đen mờ 85% */
+  
+  /* Dùng flex để căn giữa ảnh */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Class 'active' này sẽ được JS thêm vào để_hiện lightbox */
+.lightbox-overlay.active {
+  display: flex;
+}
+
+/* Ảnh được phóng to */
+.lightbox-content {
+  max-width: 85vw; /* Ảnh chiếm tối đa 85% chiều rộng màn hình */
+  max-height: 85vh; /* Ảnh chiếm tối đa 85% chiều cao màn hình */
+  object-fit: contain; /* Đảm bảo ảnh vừa vặn, không bị méo */
+  border-radius: 5px;
+  border: 3px solid white;
+}
+
+/* Nút đóng (dấu X) */
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  font-size: 45px;
+  color: #fff;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* === CSS CHO NÚT CÀI ĐẶT MỚI (BÁNH RĂNG) === */
+#settings-open-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--color-container-bg);
+    color: var(--color-text);
+    border: 1px solid var(--color-ethnic-card-border);
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.6em; /* Kích thước icon bánh răng */
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 1001;
+    transition: all 0.3s;
+}
+#settings-open-button:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transform: translateY(-2px) rotate(30deg); /* Hiệu ứng xoay khi hover */
+}
+
+/* === CSS CHO BẢNG CÀI ĐẶT (MODAL) === */
+
+/* Lớp nền mờ */
+.settings-modal-overlay {
+    display: none; /* Ẩn ban đầu */
+    position: fixed;
+    z-index: 2000; /* Nằm trên cả nút cài đặt */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px); /* Hiệu ứng mờ (nếu trình duyệt hỗ trợ) */
+    align-items: center;
+    justify-content: center;
+}
+.settings-modal-overlay.active {
+    display: flex; /* Hiện lên khi có class 'active' */
+}
+
+/* Bảng cài đặt */
+.settings-content {
+    background: var(--color-container-bg);
+    padding: 25px 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+}
+
+/* Nút đóng (X) */
+.settings-close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 2.5em;
+    color: var(--color-text);
+    cursor: pointer;
+    line-height: 1;
+    opacity: 0.5;
+}
+.settings-close-button:hover {
+    opacity: 1;
+}
+
+/* Tiêu đề trong bảng */
+.settings-content h3 {
+    margin-top: 0;
+    color: var(--color-heading);
+    border-bottom: 2px solid var(--color-brand-yellow);
+    padding-bottom: 10px;
+}
+
+/* Khu vực chứa các cài đặt */
+.setting-item {
+    display: flex;
+    justify-content: space-between; /* Đẩy chữ và nút về 2 phía */
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--color-media-item-border);
+}
+.setting-item label {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+/* === CSS CHO CÔNG TẮC (TOGGLE SWITCH) === */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+}
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 28px;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+input:checked + .slider {
+    background-color: var(--color-heading); /* Màu đỏ/vàng khi bật */
+}
+input:checked + .slider:before {
+    transform: translateX(22px); /* Di chuyển nút gạt */
+}
