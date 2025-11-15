@@ -7,9 +7,21 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    
-    <div id="header-placeholder"></div>
-    <div id="navbar-placeholder"></div>
+    <header>
+        <h1>Bản Sắc Việt</h1>
+        <p>Nơi hội tụ tinh hoa văn hóa Việt</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html" class="active">Trang Chủ</a></li>
+            <li><a href="pages/gioi-thieu.html">Giới Thiệu</a></li>
+            <li><a href="pages/cac-dan-toc.html">Các Dân Tộc</a></li>
+            <li><a href="pages/ban-do.html">Bản Đồ Văn Hóa</a></li>
+            <li><a href="pages/blog.html">Blog</a></li>
+            <li><a href="pages/lien-he.html">Liên Hệ</a></li>
+        </ul>
+    </nav>
 
     <div class="hero" style="background-image: url('images/hero-trang-chu.jpg');">
         <h2>Chào mừng đến với Cội Nguồn Việt</h2>
@@ -21,34 +33,15 @@
     <div class="container">
         <main class="main-content">
             <h2>Về Dự Án</h2>
-            <p>Dự án "Bản Sắc Việt" được sinh ra với một sứ mệnh duy nhất: trở thành một thư viện số toàn diện, lưu giữ và lan tỏa vẻ đẹp văn hóa, đạo đức truyền thống của 54 dân tộc Việt Nam.</p>
+            <p>Dự án "Bản Sắc Việt" được sinh ra với một sứ mệnh duy nhất: trở thành một thư viện số toàn diện, lưu giữ và lan tỏa vẻ đẹp văn hóa, đạo đức truyền thống của 54 dân tộc Việt Nam. Trong thời đại số, việc bảo tồn và phát huy bản sắc là vô cùng quan trọng...</p>
+            
+            <h3>Nổi Bật</h3>
+            <p>Chúng tôi bắt đầu hành trình với Dân tộc Kinh, dân tộc chiếm đa số với nền văn hóa phong phú và lâu đời. Hãy nhấp vào "Các Dân Tộc" để bắt đầu khám phá.</p>
         </main>
     </div>
 
-    <div id="footer-placeholder"></div>
-
-    <script>
-        // Hàm để tải nội dung từ một file HTML và chèn vào placeholder
-        async function loadHTML(placeholderId, filePath) {
-            try {
-                const response = await fetch(filePath);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const html = await response.text();
-                document.getElementById(placeholderId).innerHTML = html;
-            } catch (error) {
-                console.error(`Could not load ${filePath}:`, error);
-            }
-        }
-
-        // Tải các phần chung khi DOM đã sẵn sàng
-        document.addEventListener('DOMContentLoaded', () => {
-            // Đường dẫn đến các file include (từ góc nhìn của index.html)
-            loadHTML('header-placeholder', 'includes/header.html');
-            loadHTML('navbar-placeholder', 'includes/navbar.html');
-            loadHTML('footer-placeholder', 'includes/footer.html');
-        });
-    </script>
+    <footer>
+        <p>&copy; 2025 Bản Sắc Việt. Bảo lưu mọi quyền.</p>
+    </footer>
 </body>
 </html>
