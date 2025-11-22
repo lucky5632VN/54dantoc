@@ -11,9 +11,15 @@
     
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        /* CSS riêng cho ảnh */
+        /* CSS riêng cho ảnh phóng to khi hover */
         .culture-card:hover img { transform: scale(1.1); }
         .culture-card img { transition: transform 0.5s ease; }
+        
+        /* Hiệu ứng ánh sáng cho phần 3D Bảo tàng */
+        .museum-light {
+            background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.8) 70%);
+            box-shadow: inset 0 0 50px #000;
+        }
     </style>
 </head>
 <body class="flex flex-col min-h-screen font-[Playfair_Display]">
@@ -149,15 +155,66 @@
             </div>
         </section>
 
+        <section class="mb-20 gs-reveal">
+            <div class="bg-[#1a1a1a] text-[#F0EAD6] rounded-xl overflow-hidden shadow-2xl border border-gray-700">
+                <div class="p-8 text-center border-b border-gray-700">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#DAA520] mb-2 font-[Playfair_Display]">Bảo Vật Quốc Gia</h2>
+                    <p class="text-gray-400 italic">"Tiếng trống đồng âm vang ngàn năm lịch sử"</p>
+                </div>
+                
+                <div class="flex flex-col md:flex-row">
+                    <div class="w-full md:w-2/3 h-[500px] relative museum-light overflow-hidden group">
+                        <div class="sketchfab-embed-wrapper w-full h-full">
+                            <iframe 
+                                title="Trống Đồng Việt Nam" 
+                                class="w-full h-[calc(100%+60px)] -mt-[60px]" 
+                                frameborder="0" 
+                                allowfullscreen 
+                                mozallowfullscreen="true" 
+                                webkitallowfullscreen="true" 
+                                allow="autoplay; fullscreen; xr-spatial-tracking" 
+                                xr-spatial-tracking 
+                                execution-while-out-of-viewport 
+                                execution-while-not-rendered 
+                                web-share 
+                                src="https://sketchfab.com/models/7e38e31e0ac64f43a2035aecfc32f6b2/embed?autostart=1&ui_infos=0&ui_watermark=0&ui_controls=1&transparent=1"> 
+                            </iframe>
+                        </div>
+                        
+                        <div class="absolute bottom-6 left-0 w-full text-center pointer-events-none transition-opacity duration-500 group-hover:opacity-0">
+                             <span class="bg-black/50 text-white px-4 py-2 rounded-full text-xs backdrop-blur-md border border-white/20">
+                                🖱️ Xoay để xem chi tiết hoa văn
+                             </span>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-1/3 p-8 flex flex-col justify-center bg-[#252525]">
+                        <h3 class="text-2xl font-bold text-[#DAA520] mb-4">Trống Đồng Đông Sơn</h3>
+                        <div class="space-y-4 text-sm text-gray-300 leading-relaxed text-justify">
+                            <p>
+                                Trống đồng (tiêu biểu là trống Ngọc Lũ, Hoàng Hạ) là đỉnh cao nghệ thuật đúc đồng của người Việt cổ thời đại các Vua Hùng.
+                            </p>
+                            <p>
+                                <strong class="text-[#DAA520]">Ý nghĩa:</strong> Mặt trống là hình ảnh mặt trời ở giữa, xung quanh là các vòng tròn đồng tâm vẽ cảnh sinh hoạt, giã gạo, múa hát, đua thuyền... thể hiện ước vọng mưa thuận gió hòa.
+                            </p>
+                            <div class="mt-6 p-4 border border-[#DAA520]/30 rounded bg-[#DAA520]/10">
+                                <p class="italic text-[#DAA520] text-center">"Cốt cách phi phàm, tinh hoa hội tụ"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="mb-12 gs-reveal">
-            <div class="bg-[#2D2D2D] text-[#F0EAD6] rounded-xl overflow-hidden shadow-2xl flex flex-col md:flex-row">
+            <div class="bg-[#FDFBF7] rounded-xl overflow-hidden shadow-lg flex flex-col md:flex-row border border-gray-200">
                 <div class="md:w-1/2 h-64 md:h-auto relative">
                      <img src="../images/kinh/tin-nguong.jpg" alt="Tín Ngưỡng Thờ Mẫu" class="w-full h-full object-cover absolute inset-0">
                 </div>
                 <div class="md:w-1/2 p-10 flex flex-col justify-center">
-                    <h2 class="text-3xl font-bold text-[#DAA520] mb-4">Tín Ngưỡng Thờ Mẫu</h2>
-                    <p class="text-lg italic mb-6 opacity-80">"Tháng Tám giỗ Cha, tháng Ba giỗ Mẹ"</p>
-                    <p class="text-sm leading-loose text-justify opacity-90">
+                    <h2 class="text-3xl font-bold text-cinnabar mb-4">Tín Ngưỡng Thờ Mẫu</h2>
+                    <p class="text-lg italic mb-6 text-gray-600">"Tháng Tám giỗ Cha, tháng Ba giỗ Mẹ"</p>
+                    <p class="text-sm leading-loose text-justify text-gray-700">
                         Đạo Mẫu là tín ngưỡng bản địa của người Việt, tôn thờ các vị Nữ thần (Mẫu) cai quản Trời, Đất, Nước, Rừng. Nghi lễ <strong>Hầu Đồng</strong> (Lên Đồng) là một di sản văn hóa phi vật thể của nhân loại, thể hiện ước vọng về sức khỏe, tài lộc và may mắn.
                     </p>
                 </div>
@@ -175,18 +232,22 @@
     </footer>
 
     <script>
+        // Đăng ký plugin ScrollTrigger
         gsap.registerPlugin(ScrollTrigger);
         
+        // Hiệu ứng Fade Up cho các phần tử gs-reveal
         gsap.from(".gs-reveal", { 
             scrollTrigger: { trigger: ".gs-reveal", start: "top 85%" },
             opacity: 0, y: 50, duration: 1, ease: "power2.out" 
         });
 
+        // Hiệu ứng bay từ trái sang
         gsap.from(".gs-left", { 
             scrollTrigger: { trigger: ".gs-left", start: "top 80%" },
             opacity: 0, x: -50, duration: 1, ease: "power2.out" 
         });
 
+        // Hiệu ứng bay từ phải sang
         gsap.from(".gs-right", { 
             scrollTrigger: { trigger: ".gs-right", start: "top 80%" },
             opacity: 0, x: 50, duration: 1, ease: "power2.out" 

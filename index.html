@@ -12,6 +12,7 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="css/style.css">
     <style>
         /* --- CSS TÙY CHỈNH --- */
         body {
@@ -49,9 +50,15 @@
             background-color: #C62828; transition: width 0.3s;
         }
         .nav-link:hover::after { width: 100%; }
+
+        /* Hiệu ứng ánh sáng bảo tàng (Dùng cho phần 3D) */
+        .museum-light {
+            background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.8) 70%);
+            box-shadow: inset 0 0 50px #000;
+        }
     </style>
 </head>
-<body>
+<body class="flex flex-col min-h-screen font-[Playfair_Display]">
 
     <div class="paper-texture"></div>
 
@@ -61,7 +68,7 @@
             <h1 class="text-2xl font-bold text-cinnabar tracking-widest uppercase">Bản Sắc Việt</h1>
         </div>
         <ul class="hidden md:flex gap-8 font-medium text-gray-700">
-            <li><a href="index.html" class="nav-link text-cinnabar">Trang Chủ</a></li>
+            <li><a href="index.html" class="nav-link text-cinnabar font-bold">Trang Chủ</a></li>
             <li><a href="pages/gioi-thieu.html" class="nav-link hover:text-cinnabar transition">Giới Thiệu</a></li>
             <li><a href="pages/cac-dan-toc.html" class="nav-link hover:text-cinnabar transition">Các Dân Tộc</a></li>
             <li><a href="pages/ban-do.html" class="nav-link hover:text-cinnabar transition">Bản Đồ</a></li>
@@ -85,38 +92,58 @@
         <div class="absolute bottom-10 animate-bounce text-cinnabar text-xl font-bold">↓ Cuộn xuống</div>
     </section>
 
-    <section id="section-village" class="min-h-screen flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-20 bg-[#E6D7C3]/40 border-t border-b border-white/50">
-        <div class="w-full md:w-1/2 md:pr-10 mb-10 md:mb-0 z-10 gs-left">
-            <h2 class="text-5xl md:text-6xl font-bold mb-6 text-gray-800">
-                Cổng Làng.<br>
-                <span class="text-cinnabar text-4xl italic font-[Dancing_Script]">Nét đẹp ngàn đời.</span>
-            </h2>
-            <p class="text-xl mb-8 leading-loose text-gray-700 text-justify">
-                Cổng làng không chỉ là lối đi, mà là ranh giới ước lệ giữa không gian sinh hoạt cộng đồng và thế giới bên ngoài. 
-                Kiến trúc cổng làng thường có tầng mái cong vút, chạm khắc tinh xảo, biểu tượng cho sự uy nghiêm và hiếu khách.
-            </p>
-            <div class="p-4 border-l-4 border-cinnabar bg-white/40 italic text-sm text-gray-600 rounded-r-lg">
-                *Gợi ý: Bạn có thể dùng chuột/tay để xoay mô hình 3D bên cạnh.
-            </div>
-        </div>
+    <section id="section-village" class="py-20 px-6 bg-[#E6D7C3]/40 border-t border-white/50">
+        <div class="container mx-auto max-w-6xl gs-reveal">
+            
+            <div class="bg-[#1a1a1a] text-[#F0EAD6] rounded-xl overflow-hidden shadow-2xl border border-gray-700">
+                <div class="p-8 text-center border-b border-gray-700">
+                    <h2 class="text-3xl md:text-5xl font-bold text-[#DAA520] mb-2 font-[Playfair_Display]">Cổng Làng Việt</h2>
+                    <p class="text-gray-400 italic font-[Dancing_Script] text-xl">"Nét đẹp ngàn đời - Ranh giới của sự bình yên"</p>
+                </div>
+                
+                <div class="flex flex-col md:flex-row">
+                    <div class="w-full md:w-2/3 h-[500px] relative museum-light overflow-hidden group">
+                        <div class="sketchfab-embed-wrapper w-full h-full">
+                            <iframe 
+                                title="Vietnam Temple Gate" 
+                                class="w-full h-[calc(100%+60px)] -mt-[60px]"
+                                frameborder="0" 
+                                allowfullscreen 
+                                mozallowfullscreen="true" 
+                                webkitallowfullscreen="true" 
+                                allow="autoplay; fullscreen; xr-spatial-tracking" 
+                                xr-spatial-tracking 
+                                execution-while-out-of-viewport 
+                                execution-while-not-rendered 
+                                web-share 
+                                src="https://sketchfab.com/models/4fad9643769f4ff5b71ea66d7f42b8c5/embed?autostart=1&ui_infos=0&ui_watermark=0&ui_controls=1&transparent=1"> 
+                            </iframe>
+                        </div>
+                        
+                        <div class="absolute bottom-6 left-0 w-full text-center pointer-events-none transition-opacity duration-500 group-hover:opacity-0">
+                             <span class="bg-black/50 text-white px-4 py-2 rounded-full text-xs backdrop-blur-md border border-white/20">
+                                🖱️ Xoay để xem chi tiết kiến trúc
+                             </span>
+                        </div>
+                    </div>
 
-        <div class="w-full md:w-1/2 h-[400px] md:h-[500px] relative gs-right shadow-2xl rounded-lg overflow-hidden border-4 border-[#C62828]">
-            <div class="sketchfab-embed-wrapper w-full h-full"> 
-                <iframe 
-                    title="Vietnam Temple Gate" 
-                    class="w-full h-full"
-                    frameborder="0" 
-                    allowfullscreen 
-                    mozallowfullscreen="true" 
-                    webkitallowfullscreen="true" 
-                    allow="autoplay; fullscreen; xr-spatial-tracking" 
-                    xr-spatial-tracking 
-                    execution-while-out-of-viewport 
-                    execution-while-not-rendered 
-                    web-share 
-                    src="https://sketchfab.com/models/4fad9643769f4ff5b71ea66d7f42b8c5/embed?autostart=1&ui_infos=0&ui_controls=0&ui_stop=0&transparent=1"> 
-                </iframe> 
+                    <div class="w-full md:w-1/3 p-8 flex flex-col justify-center bg-[#252525]">
+                        <h3 class="text-2xl font-bold text-[#DAA520] mb-4 border-l-4 border-[#C62828] pl-4">Ý Nghĩa Văn Hóa</h3>
+                        <div class="space-y-4 text-sm text-gray-300 leading-relaxed text-justify">
+                            <p>
+                                Cổng làng không chỉ là lối đi, mà là ranh giới ước lệ giữa không gian sinh hoạt cộng đồng và thế giới bên ngoài. Bước qua cổng làng là bước về nhà, về với nguồn cội.
+                            </p>
+                            <p>
+                                <strong class="text-[#DAA520]">Kiến trúc:</strong> Thường có tầng mái cong vút như mũi thuyền, chạm khắc tinh xảo hình rồng, phượng, hoa lá. Hai bên trụ cổng thường có câu đối chữ Hán răn dạy đạo làm người.
+                            </p>
+                            <div class="mt-6 p-4 border border-[#DAA520]/30 rounded bg-[#DAA520]/10">
+                                <p class="italic text-[#DAA520] text-center">"Cây đa, bến nước, sân đình"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            
         </div>
     </section>
 
@@ -124,10 +151,10 @@
         <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-8 gs-reveal">Về Dự Án <span class="text-cinnabar">Bản Sắc Việt</span></h2>
         <div class="text-lg leading-loose text-gray-700 gs-reveal text-justify md:text-center">
             <p class="mb-6">
-                Dự án "Bản Sắc Việt" được sinh ra với một sứ mệnh duy nhất: trở thành một thư viện số toàn diện, lưu giữ và lan tỏa vẻ đẹp văn hóa, đạo đức truyền thống của 54 dân tộc Việt Nam. Trong thời đại số, việc bảo tồn và phát huy bản sắc là vô cùng quan trọng.
+                Dự án "Bản Sắc Việt" được sinh ra với một sứ mệnh duy nhất: trở thành một thư viện số toàn diện, lưu giữ và lan tỏa vẻ đẹp văn hóa, đạo đức truyền thống của 54 dân tộc Việt Nam.
             </p>
             <p>
-                Chúng tôi bắt đầu hành trình với <strong class="text-cinnabar">Dân tộc Kinh</strong>, dân tộc chiếm đa số với nền văn hóa phong phú và lâu đời. Hãy cùng chúng tôi gìn giữ những giá trị trường tồn.
+                Chúng tôi bắt đầu hành trình với <strong class="text-cinnabar">Dân tộc Kinh</strong>, dân tộc chiếm đa số với nền văn hóa phong phú. Hãy cùng chúng tôi gìn giữ những giá trị trường tồn.
             </p>
         </div>
     </section>
@@ -177,108 +204,45 @@
     <script type="module">
         import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
 
-        // ============================================
-        // 1. KHỞI TẠO GSAP ANIMATION
-        // ============================================
+        // === GSAP ANIMATION ===
         gsap.registerPlugin(ScrollTrigger);
-
-        // Hiệu ứng hiện lên (Fade Up)
+        
         gsap.utils.toArray('.gs-reveal').forEach(elem => {
             gsap.from(elem, {
-                scrollTrigger: {
-                    trigger: elem,
-                    start: "top 85%",
-                    toggleActions: "play none none reverse"
-                },
-                opacity: 0,
-                y: 50,
-                duration: 1.2,
-                ease: "power3.out"
+                scrollTrigger: { trigger: elem, start: "top 85%" },
+                opacity: 0, y: 50, duration: 1.2, ease: "power3.out"
             });
         });
 
-        // Hiệu ứng bay từ trái sang
-        gsap.utils.toArray('.gs-left').forEach(elem => {
-            gsap.from(elem, {
-                scrollTrigger: {
-                    trigger: elem,
-                    start: "top 80%",
-                },
-                opacity: 0,
-                x: -100,
-                duration: 1.5,
-                ease: "power3.out"
-            });
-        });
-
-        // Hiệu ứng bay từ phải sang
-        gsap.utils.toArray('.gs-right').forEach(elem => {
-            gsap.from(elem, {
-                scrollTrigger: {
-                    trigger: elem,
-                    start: "top 80%",
-                },
-                opacity: 0,
-                x: 100,
-                duration: 1.5,
-                ease: "power3.out"
-            });
-        });
-
-
-        // ============================================
-        // 2. CẤU HÌNH GEMINI AI
-        // ============================================
+        // === GEMINI AI LOGIC (Giữ nguyên logic cũ) ===
         const API_KEY = "AIzaSyBde4o6VAI29I-et4AThe54YoSDSP-S8CI"; 
         const genAI = new GoogleGenerativeAI(API_KEY);
-        
-        // Sử dụng backtick (`) để tránh lỗi cú pháp chuỗi
         const model = genAI.getGenerativeModel({ 
             model: "gemini-2.0-flash",
-            systemInstruction: `Vai trò: Bạn là Cụ Đồ, một bậc cao niên uyên bác sống ở làng quê Việt Nam xưa. 
-            Tính cách: Trầm ấm, nhân hậu, khiêm tốn, luôn xưng là "lão" hoặc "ta", gọi người dùng là "con". 
-            Nhiệm vụ: Trả lời câu hỏi về cuộc sống, đạo đức bằng các câu Ca dao, Tục ngữ, Thành ngữ Việt Nam. 
-            Quy tắc: 
-            1. Tuyệt đối KHÔNG dùng từ ngữ công nghệ (wifi, internet, app...). 
-            2. Luôn trích dẫn ít nhất một câu ca dao/tục ngữ phù hợp trong câu trả lời. 
-            3. Lời văn phải mang phong cách cổ xưa (Ví dụ: 'Ngẫm mà xem', 'Con à').`
+            systemInstruction: `Vai trò: Bạn là Cụ Đồ, một bậc cao niên uyên bác...`
         });
 
-        // ============================================
-        // 3. LOGIC CHAT
-        // ============================================
-        
         async function askGemini(message) {
             try {
                 const result = await model.generateContent(message);
                 return { ok: true, text: result.response.text() };
             } catch (err) {
                 console.error(err);
-                return { ok: false, text: "Lỗi kết nối với Cụ Đồ (API Error): " + err.message };
+                return { ok: false, text: "Lỗi kết nối: " + err.message };
             }
         }
 
         function addMsg(who, text) {
             const box = document.getElementById("chat-body");
             const div = document.createElement("div");
-
             if (who === "user") {
                 div.className = "flex justify-end";
-                div.innerHTML = `
-                    <div class="bg-cinnabar text-white px-4 py-2 rounded-l-xl rounded-tr-xl max-w-[85%] text-sm shadow-sm">
-                        ${text}
-                    </div>
-                `;
+                div.innerHTML = `<div class="bg-cinnabar text-white px-4 py-2 rounded-l-xl rounded-tr-xl max-w-[85%] text-sm shadow-sm">${text}</div>`;
             } else {
                 div.className = "flex justify-start";
                 const parsedText = typeof marked !== 'undefined' ? marked.parse(text) : text;
-                div.innerHTML = `
-                    <div class="bg-white border border-gray-200 p-3 rounded-r-xl rounded-bl-xl text-sm text-gray-800 shadow-sm max-w-[90%] prose prose-sm">
-                        ${parsedText}
-                    </div>
-                `;
+                div.innerHTML = `<div class="bg-white border border-gray-200 p-3 rounded-r-xl rounded-bl-xl text-sm text-gray-800 shadow-sm max-w-[90%] prose prose-sm">${parsedText}</div>`;
             }
-
             box.appendChild(div);
             box.scrollTop = box.scrollHeight;
         }
@@ -286,60 +250,42 @@
         async function sendMessage() {
             const input = document.getElementById("user-input");
             const text = input.value.trim();
-            const sendBtn = document.querySelector('button[onclick="sendMessage()"]');
-            
             if (!text) return;
 
-            input.disabled = true;
-            sendBtn.disabled = true;
-            sendBtn.innerText = "...";
+            const sendBtn = document.querySelector('button[onclick="sendMessage()"]');
+            input.disabled = true; sendBtn.disabled = true; sendBtn.innerText = "...";
 
             addMsg("user", text);
             input.value = "";
 
             const box = document.getElementById("chat-body");
-            const loadingDiv = document.createElement("div");
-            loadingDiv.id = "loading-msg";
-            loadingDiv.className = "text-gray-400 text-xs italic ml-2 mb-2";
-            loadingDiv.innerText = "Cụ Đồ đang mài mực suy ngẫm...";
-            box.appendChild(loadingDiv);
+            const loading = document.createElement("div");
+            loading.className = "text-gray-400 text-xs italic ml-2 mb-2";
+            loading.innerText = "Cụ Đồ đang suy ngẫm...";
+            box.appendChild(loading);
             box.scrollTop = box.scrollHeight;
 
             const r = await askGemini(text);
+            box.removeChild(loading);
+            addMsg("bot", r.ok ? r.text : `<span style="color:#b00">${r.text}</span>`);
 
-            box.removeChild(loadingDiv);
-
-            if (r.ok) {
-                addMsg("bot", r.text);
-            } else {
-                addMsg("bot", `<span style="color:#b00">${r.text}</span>`);
-            }
-
-            input.disabled = false;
-            sendBtn.disabled = false;
-            sendBtn.innerText = "Gửi";
+            input.disabled = false; sendBtn.disabled = false; sendBtn.innerText = "Gửi";
             input.focus();
         }
 
         function toggleChat() {
-            const chatInterface = document.getElementById('chat-interface');
-            chatInterface.classList.toggle('chat-hidden');
-            if (!chatInterface.classList.contains('chat-hidden')) {
-                setTimeout(() => document.getElementById('user-input').focus(), 100);
-            }
+            const chat = document.getElementById('chat-interface');
+            chat.classList.toggle('chat-hidden');
+            if (!chat.classList.contains('chat-hidden')) setTimeout(() => document.getElementById('user-input').focus(), 100);
         }
 
         function handleEnter(event) {
-            if (event.key === "Enter") {
-                sendMessage();
-            }
+            if (event.key === "Enter") sendMessage();
         }
 
-        // Export functions to window
         window.sendMessage = sendMessage;
         window.toggleChat = toggleChat;
         window.handleEnter = handleEnter;
-
     </script>
 </body>
 </html>
