@@ -3,35 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - Bản Sắc Việt</title>
+    <title>Blog Văn Hóa - Bản Sắc Việt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
-    <header>
-        <h1>Bản Sắc Việt</h1>
-        <p>Nơi hội tụ tinh hoa văn hóa Việt</p>
-    </header>
+<body class="flex flex-col min-h-screen">
 
-    <nav>
-        <ul>
-            <li><a href="../index.html">Trang Chủ</a></li>
-            <li><a href="gioi-thieu.html">Giới Thiệu</a></li>
-            <li><a href="cac-dan-toc.html">Các Dân Tộc</a></li>
-            <li><a href="ban-do.html">Bản Đồ Văn Hóa</a></li>
-            <li><a href="blog.html" class="active">Blog</a></li>
-            <li><a href="lien-he.html">Liên Hệ</a></li>
+    <div class="paper-texture"></div>
+
+    <nav class="fixed top-0 w-full z-40 px-6 py-4 flex justify-between items-center bg-[#F0EAD6]/90 backdrop-blur-sm border-b border-[#C62828]/20 shadow-sm">
+        <div class="flex items-center gap-2">
+            <span class="text-3xl">⛩️</span>
+            <a href="../index.html" class="text-2xl font-bold text-cinnabar tracking-widest uppercase hover:opacity-80">Bản Sắc Việt</a>
+        </div>
+        <ul class="hidden md:flex gap-8 font-medium text-gray-700">
+            <li><a href="../index.html" class="nav-link hover:text-cinnabar transition">Trang Chủ</a></li>
+            <li><a href="gioi-thieu.html" class="nav-link hover:text-cinnabar transition">Giới Thiệu</a></li>
+            <li><a href="cac-dan-toc.html" class="nav-link hover:text-cinnabar transition">Các Dân Tộc</a></li>
+            <li><a href="ban-do.html" class="nav-link hover:text-cinnabar transition">Bản Đồ</a></li>
+            <li><a href="blog.html" class="nav-link font-bold text-cinnabar">Blog</a></li>
+            <li><a href="lien-he.html" class="nav-link hover:text-cinnabar transition">Liên Hệ</a></li>
         </ul>
+        <button class="md:hidden text-2xl text-cinnabar">☰</button>
     </nav>
 
-    <div class="container">
-        <main class="main-content">
-            <h2>Blog / Câu Chuyện Văn Hóa</h2>
-            <p>Tính năng này đang được phát triển!</p>
-        </main>
-    </div>
+    <main class="flex-grow container mx-auto px-6 py-10 pt-28">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-cinnabar mb-2">Góc Nhìn Văn Hóa</h1>
+            <p class="text-gray-600">Những câu chuyện nhỏ về phong tục, tập quán và nét đẹp đời thường.</p>
+        </div>
 
-    <footer>
-        <p>&copy; 2025 Bản Sắc Việt. Bảo lưu mọi quyền.</p>
+        <div class="grid md:grid-cols-3 gap-8">
+            
+            <article class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition duration-300 flex flex-col">
+                <div class="h-48 bg-gray-200 relative">
+                    <div class="absolute inset-0 flex items-center justify-center text-gray-400 bg-gray-100">
+                        [Ảnh: Bánh Chưng]
+                    </div>
+                </div>
+                <div class="p-6 flex-1 flex flex-col">
+                    <div class="text-xs text-cinnabar font-bold uppercase mb-2">Ẩm Thực</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-cinnabar cursor-pointer">Sự tích Bánh Chưng Bánh Giày: Triết lý Vuông Tròn</h3>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                        Không chỉ là món ăn ngày Tết, Bánh Chưng còn thể hiện vũ trụ quan của người Việt cổ về Trời tròn Đất vuông...
+                    </p>
+                    <a href="#" class="mt-auto text-cinnabar font-bold text-sm hover:underline">Đọc tiếp &rarr;</a>
+                </div>
+            </article>
+
+            <article class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition duration-300 flex flex-col">
+                <div class="h-48 bg-gray-200 relative">
+                    <div class="absolute inset-0 flex items-center justify-center text-gray-400 bg-gray-100">
+                        [Ảnh: Áo Dài]
+                    </div>
+                </div>
+                <div class="p-6 flex-1 flex flex-col">
+                    <div class="text-xs text-cinnabar font-bold uppercase mb-2">Trang Phục</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-cinnabar cursor-pointer">Áo Dài - Từ Cung Đình Ra Phố Thị</h3>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                        Hành trình biến đổi từ chiếc áo Ngũ thân rộng rãi đến tà áo dài tôn vinh đường cong ngày nay.
+                    </p>
+                    <a href="#" class="mt-auto text-cinnabar font-bold text-sm hover:underline">Đọc tiếp &rarr;</a>
+                </div>
+            </article>
+
+            <article class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition duration-300 flex flex-col">
+                <div class="h-48 bg-gray-200 relative">
+                    <div class="absolute inset-0 flex items-center justify-center text-gray-400 bg-gray-100">
+                        [Ảnh: Trầu Cau]
+                    </div>
+                </div>
+                <div class="p-6 flex-1 flex flex-col">
+                    <div class="text-xs text-cinnabar font-bold uppercase mb-2">Phong Tục</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-cinnabar cursor-pointer">Miếng Trầu Là Đầu Câu Chuyện</h3>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                        Tại sao trong mọi lễ cưới hỏi của người Việt đều không thể thiếu trầu cau?
+                    </p>
+                    <a href="#" class="mt-auto text-cinnabar font-bold text-sm hover:underline">Đọc tiếp &rarr;</a>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <footer class="bg-[#1a1a1a] text-gray-400 py-8 text-center border-t border-gray-700 mt-auto">
+        <p class="mb-2 font-serif">&copy; 2025 Bản Sắc Việt. Bảo lưu mọi quyền.</p>
     </footer>
 </body>
 </html>

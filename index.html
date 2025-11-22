@@ -3,45 +3,343 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bản Sắc Việt - Trang Chủ</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Bản Sắc Việt - Hồn Quê Văn Hiến</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS TÙY CHỈNH --- */
+        body {
+            font-family: 'Playfair Display', serif;
+            background-color: #F0EAD6; /* Màu giấy Dó */
+            color: #2D2D2D;
+            overflow-x: hidden;
+        }
+        /* Hiệu ứng giấy cũ */
+        .paper-texture {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: -1; opacity: 0.4;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+        .text-cinnabar { color: #C62828; } /* Màu đỏ son */
+        .bg-cinnabar { background-color: #C62828; }
+        
+        /* Chat Widget Animation */
+        .chat-window { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); transform-origin: bottom right; }
+        .chat-hidden { transform: scale(0.9) translateY(20px); opacity: 0; pointer-events: none; visibility: hidden; }
+        
+        /* Scrollbar chat */
+        #chat-body::-webkit-scrollbar { width: 6px; }
+        #chat-body::-webkit-scrollbar-thumb { background-color: rgba(0,0,0,0.2); border-radius: 10px; }
+
+        /* Markdown styles */
+        .prose p { margin-bottom: 0.5em; }
+        .prose ul { list-style-type: disc; margin-left: 1.2em; }
+        .prose strong { font-weight: bold; color: #C62828; }
+
+        /* Navigation Hover Effect */
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 0;
+            background-color: #C62828; transition: width 0.3s;
+        }
+        .nav-link:hover::after { width: 100%; }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Bản Sắc Việt</h1>
-        <p>Nơi hội tụ tinh hoa văn hóa Việt</p>
-    </header>
 
-    <nav>
-        <ul>
-            <li><a href="index.html" class="active">Trang Chủ</a></li>
-            <li><a href="pages/gioi-thieu.html">Giới Thiệu</a></li>
-            <li><a href="pages/cac-dan-toc.html">Các Dân Tộc</a></li>
-            <li><a href="pages/ban-do.html">Bản Đồ Văn Hóa</a></li>
-            <li><a href="pages/blog.html">Blog</a></li>
-            <li><a href="pages/lien-he.html">Liên Hệ</a></li>
+    <div class="paper-texture"></div>
+
+    <nav class="fixed top-0 w-full z-40 px-6 py-4 flex justify-between items-center bg-[#F0EAD6]/90 backdrop-blur-sm border-b border-[#C62828]/20 shadow-sm">
+        <div class="flex items-center gap-2">
+            <span class="text-3xl">⛩️</span>
+            <h1 class="text-2xl font-bold text-cinnabar tracking-widest uppercase">Bản Sắc Việt</h1>
+        </div>
+        <ul class="hidden md:flex gap-8 font-medium text-gray-700">
+            <li><a href="index.html" class="nav-link text-cinnabar">Trang Chủ</a></li>
+            <li><a href="pages/gioi-thieu.html" class="nav-link hover:text-cinnabar transition">Giới Thiệu</a></li>
+            <li><a href="pages/cac-dan-toc.html" class="nav-link hover:text-cinnabar transition">Các Dân Tộc</a></li>
+            <li><a href="pages/ban-do.html" class="nav-link hover:text-cinnabar transition">Bản Đồ</a></li>
+            <li><a href="pages/blog.html" class="nav-link hover:text-cinnabar transition">Blog</a></li>
+            <li><a href="pages/lien-he.html" class="nav-link hover:text-cinnabar transition">Liên Hệ</a></li>
         </ul>
+        <button class="md:hidden text-2xl text-cinnabar">☰</button>
     </nav>
 
-    <div class="hero" style="background-image: url('images/hero-trang-chu.jpg');">
-        <h2>Chào mừng đến với Cội Nguồn Việt</h2>
-        <p>Khám phá di sản văn hóa và đạo đức phong phú của 54 dân tộc anh em.</p>
-        <br>
-        <a href="pages/cac-dan-toc.html" class="cta-button">Khám Phá Ngay</a>
-    </div>
+    <section class="h-screen flex flex-col items-center justify-center text-center relative p-6 pt-20">
+        <p class="text-2xl text-gray-600 mb-2 font-[Dancing_Script] gs-reveal">Nơi hội tụ tinh hoa...</p>
+        <h1 class="text-6xl md:text-9xl font-bold text-cinnabar mb-6 tracking-wide gs-reveal">VĂN HIẾN</h1>
+        <p class="text-lg md:text-xl max-w-lg mx-auto leading-relaxed gs-reveal italic text-gray-700">
+            "Dù ai đi ngược về xuôi,<br>Nhớ ngày giỗ Tổ mùng mười tháng ba."
+        </p>
+        <div class="mt-8 gs-reveal">
+            <a href="pages/cac-dan-toc.html" class="px-8 py-3 border-2 border-cinnabar text-cinnabar font-bold rounded-full hover:bg-cinnabar hover:text-[#F0EAD6] transition duration-300">
+                Khám Phá Ngay
+            </a>
+        </div>
+        <div class="absolute bottom-10 animate-bounce text-cinnabar text-xl font-bold">↓ Cuộn xuống</div>
+    </section>
 
-    <div class="container">
-        <main class="main-content">
-            <h2>Về Dự Án</h2>
-            <p>Dự án "Bản Sắc Việt" được sinh ra với một sứ mệnh duy nhất: trở thành một thư viện số toàn diện, lưu giữ và lan tỏa vẻ đẹp văn hóa, đạo đức truyền thống của 54 dân tộc Việt Nam. Trong thời đại số, việc bảo tồn và phát huy bản sắc là vô cùng quan trọng...</p>
-            
-            <h3>Nổi Bật</h3>
-            <p>Chúng tôi bắt đầu hành trình với Dân tộc Kinh, dân tộc chiếm đa số với nền văn hóa phong phú và lâu đời. Hãy nhấp vào "Các Dân Tộc" để bắt đầu khám phá.</p>
-        </main>
-    </div>
+    <section id="section-village" class="min-h-screen flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-20 bg-[#E6D7C3]/40 border-t border-b border-white/50">
+        <div class="w-full md:w-1/2 md:pr-10 mb-10 md:mb-0 z-10 gs-left">
+            <h2 class="text-5xl md:text-6xl font-bold mb-6 text-gray-800">
+                Cổng Làng.<br>
+                <span class="text-cinnabar text-4xl italic font-[Dancing_Script]">Nét đẹp ngàn đời.</span>
+            </h2>
+            <p class="text-xl mb-8 leading-loose text-gray-700 text-justify">
+                Cổng làng không chỉ là lối đi, mà là ranh giới ước lệ giữa không gian sinh hoạt cộng đồng và thế giới bên ngoài. 
+                Kiến trúc cổng làng thường có tầng mái cong vút, chạm khắc tinh xảo, biểu tượng cho sự uy nghiêm và hiếu khách.
+            </p>
+            <div class="p-4 border-l-4 border-cinnabar bg-white/40 italic text-sm text-gray-600 rounded-r-lg">
+                *Gợi ý: Bạn có thể dùng chuột/tay để xoay mô hình 3D bên cạnh.
+            </div>
+        </div>
 
-    <footer>
-        <p>&copy; 2025 Bản Sắc Việt. Bảo lưu mọi quyền.</p>
+        <div class="w-full md:w-1/2 h-[400px] md:h-[500px] relative gs-right shadow-2xl rounded-lg overflow-hidden border-4 border-[#C62828]">
+            <div class="sketchfab-embed-wrapper w-full h-full"> 
+                <iframe 
+                    title="Vietnam Temple Gate" 
+                    class="w-full h-full"
+                    frameborder="0" 
+                    allowfullscreen 
+                    mozallowfullscreen="true" 
+                    webkitallowfullscreen="true" 
+                    allow="autoplay; fullscreen; xr-spatial-tracking" 
+                    xr-spatial-tracking 
+                    execution-while-out-of-viewport 
+                    execution-while-not-rendered 
+                    web-share 
+                    src="https://sketchfab.com/models/4fad9643769f4ff5b71ea66d7f42b8c5/embed?autostart=1&ui_infos=0&ui_controls=0&ui_stop=0&transparent=1"> 
+                </iframe> 
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-6 md:px-20 text-center max-w-5xl mx-auto">
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-8 gs-reveal">Về Dự Án <span class="text-cinnabar">Bản Sắc Việt</span></h2>
+        <div class="text-lg leading-loose text-gray-700 gs-reveal text-justify md:text-center">
+            <p class="mb-6">
+                Dự án "Bản Sắc Việt" được sinh ra với một sứ mệnh duy nhất: trở thành một thư viện số toàn diện, lưu giữ và lan tỏa vẻ đẹp văn hóa, đạo đức truyền thống của 54 dân tộc Việt Nam. Trong thời đại số, việc bảo tồn và phát huy bản sắc là vô cùng quan trọng.
+            </p>
+            <p>
+                Chúng tôi bắt đầu hành trình với <strong class="text-cinnabar">Dân tộc Kinh</strong>, dân tộc chiếm đa số với nền văn hóa phong phú và lâu đời. Hãy cùng chúng tôi gìn giữ những giá trị trường tồn.
+            </p>
+        </div>
+    </section>
+
+    <section class="h-screen flex flex-col items-center justify-center text-center bg-[#2D2D2D] text-[#F0EAD6] px-6 relative">
+        <h2 class="text-5xl md:text-7xl font-bold mb-8 text-[#DAA520] gs-reveal">Đạo Hiếu</h2>
+        <div class="max-w-2xl text-xl md:text-2xl leading-loose gs-reveal font-light">
+            <p class="mb-4">"Công cha như núi Thái Sơn<br>Nghĩa mẹ như nước trong nguồn chảy ra."</p>
+            <div class="w-16 h-1 bg-[#DAA520] mx-auto my-6"></div>
+            <p class="text-base text-gray-400 italic">Uống nước nhớ nguồn - Ăn quả nhớ kẻ trồng cây</p>
+        </div>
+    </section>
+
+    <footer class="bg-[#1a1a1a] text-gray-400 py-8 text-center border-t border-gray-700">
+        <p class="mb-2">&copy; 2025 Bản Sắc Việt. Bảo lưu mọi quyền.</p>
+        <div class="text-sm">
+            <a href="#" class="hover:text-white transition mx-2">Chính sách</a> | 
+            <a href="#" class="hover:text-white transition mx-2">Điều khoản</a>
+        </div>
     </footer>
+
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end font-sans">
+        <div id="chat-interface" class="chat-window chat-hidden bg-[#FDFBF7] w-[350px] h-[450px] shadow-2xl border border-gray-300 rounded-xl flex flex-col overflow-hidden mb-4">
+            <div class="bg-cinnabar text-[#F0EAD6] p-4 flex items-center justify-between shadow-md">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-[#F0EAD6] rounded-full flex items-center justify-center border-2 border-gray-800 text-2xl">👴</div>
+                    <div><h3 class="font-bold text-base font-serif">Cụ Đồ AI</h3></div>
+                </div>
+                <button onclick="toggleChat()" class="hover:bg-red-800 p-1 rounded text-white transition">✕</button>
+            </div>
+            <div class="flex-1 p-4 overflow-y-auto space-y-4 bg-gray-50" id="chat-body">
+                <div class="bg-white border border-gray-200 p-3 rounded-r-xl rounded-bl-xl text-sm text-gray-800 shadow-sm max-w-[90%]">
+                    Chào con. Lão là Cụ Đồ. Con có chuyện gì trăn trở về văn hóa nước Nam ta, cứ kể lão nghe.
+                </div>
+            </div>
+            <div class="p-3 border-t border-gray-200 bg-white flex gap-2">
+                <input type="text" id="user-input" placeholder="Hỏi cụ một câu..." class="flex-1 bg-gray-100 border-none rounded-full px-4 py-2 text-sm focus:ring-2 focus:ring-cinnabar focus:outline-none" onkeypress="handleEnter(event)">
+                <button onclick="sendMessage()" class="bg-cinnabar hover:bg-red-800 text-white px-4 py-2 rounded-full text-sm transition font-bold">Gửi</button>
+            </div>
+        </div>
+        
+        <button onclick="toggleChat()" class="group bg-cinnabar text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform duration-300 border-4 border-[#F0EAD6]">
+            <span class="text-3xl group-hover:rotate-12 transition-transform">📜</span>
+        </button>
+    </div>
+
+    <script type="module">
+        import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+
+        // ============================================
+        // 1. KHỞI TẠO GSAP ANIMATION
+        // ============================================
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hiệu ứng hiện lên (Fade Up)
+        gsap.utils.toArray('.gs-reveal').forEach(elem => {
+            gsap.from(elem, {
+                scrollTrigger: {
+                    trigger: elem,
+                    start: "top 85%",
+                    toggleActions: "play none none reverse"
+                },
+                opacity: 0,
+                y: 50,
+                duration: 1.2,
+                ease: "power3.out"
+            });
+        });
+
+        // Hiệu ứng bay từ trái sang
+        gsap.utils.toArray('.gs-left').forEach(elem => {
+            gsap.from(elem, {
+                scrollTrigger: {
+                    trigger: elem,
+                    start: "top 80%",
+                },
+                opacity: 0,
+                x: -100,
+                duration: 1.5,
+                ease: "power3.out"
+            });
+        });
+
+        // Hiệu ứng bay từ phải sang
+        gsap.utils.toArray('.gs-right').forEach(elem => {
+            gsap.from(elem, {
+                scrollTrigger: {
+                    trigger: elem,
+                    start: "top 80%",
+                },
+                opacity: 0,
+                x: 100,
+                duration: 1.5,
+                ease: "power3.out"
+            });
+        });
+
+
+        // ============================================
+        // 2. CẤU HÌNH GEMINI AI
+        // ============================================
+        const API_KEY = "AIzaSyBde4o6VAI29I-et4AThe54YoSDSP-S8CI"; 
+        const genAI = new GoogleGenerativeAI(API_KEY);
+        
+        // Sử dụng backtick (`) để tránh lỗi cú pháp chuỗi
+        const model = genAI.getGenerativeModel({ 
+            model: "gemini-2.0-flash",
+            systemInstruction: `Vai trò: Bạn là Cụ Đồ, một bậc cao niên uyên bác sống ở làng quê Việt Nam xưa. 
+            Tính cách: Trầm ấm, nhân hậu, khiêm tốn, luôn xưng là "lão" hoặc "ta", gọi người dùng là "con". 
+            Nhiệm vụ: Trả lời câu hỏi về cuộc sống, đạo đức bằng các câu Ca dao, Tục ngữ, Thành ngữ Việt Nam. 
+            Quy tắc: 
+            1. Tuyệt đối KHÔNG dùng từ ngữ công nghệ (wifi, internet, app...). 
+            2. Luôn trích dẫn ít nhất một câu ca dao/tục ngữ phù hợp trong câu trả lời. 
+            3. Lời văn phải mang phong cách cổ xưa (Ví dụ: 'Ngẫm mà xem', 'Con à').`
+        });
+
+        // ============================================
+        // 3. LOGIC CHAT
+        // ============================================
+        
+        async function askGemini(message) {
+            try {
+                const result = await model.generateContent(message);
+                return { ok: true, text: result.response.text() };
+            } catch (err) {
+                console.error(err);
+                return { ok: false, text: "Lỗi kết nối với Cụ Đồ (API Error): " + err.message };
+            }
+        }
+
+        function addMsg(who, text) {
+            const box = document.getElementById("chat-body");
+            const div = document.createElement("div");
+
+            if (who === "user") {
+                div.className = "flex justify-end";
+                div.innerHTML = `
+                    <div class="bg-cinnabar text-white px-4 py-2 rounded-l-xl rounded-tr-xl max-w-[85%] text-sm shadow-sm">
+                        ${text}
+                    </div>
+                `;
+            } else {
+                div.className = "flex justify-start";
+                const parsedText = typeof marked !== 'undefined' ? marked.parse(text) : text;
+                div.innerHTML = `
+                    <div class="bg-white border border-gray-200 p-3 rounded-r-xl rounded-bl-xl text-sm text-gray-800 shadow-sm max-w-[90%] prose prose-sm">
+                        ${parsedText}
+                    </div>
+                `;
+            }
+
+            box.appendChild(div);
+            box.scrollTop = box.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById("user-input");
+            const text = input.value.trim();
+            const sendBtn = document.querySelector('button[onclick="sendMessage()"]');
+            
+            if (!text) return;
+
+            input.disabled = true;
+            sendBtn.disabled = true;
+            sendBtn.innerText = "...";
+
+            addMsg("user", text);
+            input.value = "";
+
+            const box = document.getElementById("chat-body");
+            const loadingDiv = document.createElement("div");
+            loadingDiv.id = "loading-msg";
+            loadingDiv.className = "text-gray-400 text-xs italic ml-2 mb-2";
+            loadingDiv.innerText = "Cụ Đồ đang mài mực suy ngẫm...";
+            box.appendChild(loadingDiv);
+            box.scrollTop = box.scrollHeight;
+
+            const r = await askGemini(text);
+
+            box.removeChild(loadingDiv);
+
+            if (r.ok) {
+                addMsg("bot", r.text);
+            } else {
+                addMsg("bot", `<span style="color:#b00">${r.text}</span>`);
+            }
+
+            input.disabled = false;
+            sendBtn.disabled = false;
+            sendBtn.innerText = "Gửi";
+            input.focus();
+        }
+
+        function toggleChat() {
+            const chatInterface = document.getElementById('chat-interface');
+            chatInterface.classList.toggle('chat-hidden');
+            if (!chatInterface.classList.contains('chat-hidden')) {
+                setTimeout(() => document.getElementById('user-input').focus(), 100);
+            }
+        }
+
+        function handleEnter(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+
+        // Export functions to window
+        window.sendMessage = sendMessage;
+        window.toggleChat = toggleChat;
+        window.handleEnter = handleEnter;
+
+    </script>
 </body>
 </html>
