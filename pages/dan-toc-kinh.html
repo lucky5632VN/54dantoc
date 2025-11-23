@@ -3,126 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dân tộc Kinh - Bản Sắc Việt</title>
-    <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
+    <title>Dân Tộc Kinh - Bản Sắc Việt</title>
     
-    <div id="header-placeholder"></div>
-    <div id="navbar-placeholder"></div>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .culture-card:hover img { transform: scale(1.1); }
+        .culture-card img { transition: transform 0.5s ease; }
+        .museum-light {
+            background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.8) 70%);
+            box-shadow: inset 0 0 50px #000;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen font-[Playfair_Display]">
+    <div class="paper-texture"></div>
 
-    <div class="container">
-        <main class="main-content">
-            <h2>Chào Bạn Đến Với Văn Hóa Dân Tộc Kinh</h2>
-            <img src="../images/kinh/logo-dan-toc.jpg" alt="Văn hóa Dân tộc Kinh" class="hero-image">
-            
-            <p style="font-size: 1.2em; font-style: italic;">
-                Dân tộc Kinh (hay người Việt) là dân tộc chiếm đa số tại Việt Nam, với một nền văn hóa và lịch sử lâu đời, gắn liền với nền văn minh lúa nước tại các đồng bằng châu thổ.
-            </p>
-
-            <div class="module">
-                <h3 class="module-title">🏛️ Trụ Cột Đạo Đức</h3>
-                <div class="module-content">
-                    <p>Nền tảng đạo đức của người Kinh được xây dựng trên sự gắn kết gia đình (Nho giáo) và cộng đồng làng xã.</p>
-                    <h4>1. Đạo Hiếu (Thờ Cúng Tổ Tiên)</h4>
-                    <p>Chữ "Hiếu" là trung tâm. Việc thờ cúng tổ tiên, ông bà, cha mẹ (khi đã mất) là biểu hiện cao nhất của đạo Hiếu, là sợi dây kết nối các thế hệ trong gia đình.</p>
-                    
-                    <h4>2. Tôn Sư Trọng Đạo</h4>
-                    <p>Vị thế người thầy (Tôn sư) trong xã hội Kinh truyền thống rất cao, chỉ sau Vua. Tri thức và đạo lý luôn được đề cao.</p>
-
-                    <h4>3. Tình Làng Nghĩa Xóm (Văn hóa Làng Xã)</h4>
-                    <p>Người Kinh sống quần tụ theo Làng. "Lệ làng" (Hương ước) và tinh thần "Tối lửa tắt đèn có nhau" là một nét đẹp đạo đức cộng đồng đặc trưng.</p>
+    <main class="flex-grow container mx-auto px-6 py-10 pt-28 max-w-6xl">
+        
+        <div class="text-center mb-16 gs-reveal">
+            <h1 class="text-5xl md:text-7xl font-bold text-cinnabar mb-4">Dân Tộc Kinh (Việt)</h1>
+            <p class="text-2xl italic text-gray-600 font-[Dancing_Script] mb-8">"Con Rồng Cháu Tiên - Nền văn minh lúa nước rực rỡ"</p>
+            <div class="relative w-full h-[400px] md:h-[500px] rounded-xl overflow-hidden shadow-2xl border-4 border-[#C62828]/20 group">
+                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition duration-500 z-10"></div>
+                <img src="../images/kinh/quan-ho.jpg" alt="Văn hóa Quan Họ" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-700">
+                <div class="absolute bottom-6 left-6 z-20 text-white text-left">
+                    <span class="bg-cinnabar px-3 py-1 text-sm font-bold rounded uppercase tracking-wider">Di sản phi vật thể</span>
+                    <h3 class="text-3xl font-bold mt-2">Dân Ca Quan Họ Bắc Ninh</h3>
                 </div>
             </div>
+        </div>
 
-            <div class="module">
-                <h3 class="module-title">🎨 Đặc Sắc Văn Hóa (Chỉ riêng Kinh)</h3>
-                <div class="module-content">
-                    
-                    <h4>1. Ẩm Thực Lúa Nước</h4>
-                    <p>Ẩm thực Kinh đặc trưng bởi sự tinh tế trong việc phối vị và cân bằng Âm - Dương.</p>
-                    
-                    <ul class="media-list">
-                        <li class="media-list-item">
-                            <img src="../images/kinh/nuoc-mam.jpg" alt="Nước Mắm">
-                            <div class="media-content">
-                                <strong>Nước Mắm:</strong> "Linh hồn" của bữa ăn người Kinh. Việc sử dụng nước mắm làm gia vị cốt lõi trong hầu hết các món ăn là nét đặc trưng.
-                            </div>
-                        </li>
-                        <li class="media-list-item">
-                            <img src="../images/kinh/banh-chung.jpg" alt="Bánh Chưng">
-                            <div class="media-content">
-                                <strong>Bánh Chưng:</strong> Gắn liền với sự tích Lang Liêu, là biểu tượng cho nền văn minh lúa nước (gạo nếp) và triết lý Đất (vuông) của người Kinh.
-                            </div>
-                        </li>
-                    </ul>
-
-                    <h4>2. Trang Phục Đặc Trưng</h4>
-                    
-                    <ul class="media-list">
-                        <li class="media-list-item">
-                            <img src="../images/kinh/ao-ngu-than.jpg" alt="Áo Dài">
-                            <div class="media-content">
-                                <strong>Áo Dài (từ Áo Ngũ Thân):</strong> Áo Dài hiện đại là biểu tượng quốc gia, nhưng nguồn gốc của nó (từ Áo tứ thân, ngũ thân) là trang phục truyền thống của người Kinh.
-                            </div>
-                        </li>
-                        <li class="media-list-item">
-                             <img src="../images/kinh/ao-ba-ba.jpg" alt="Áo Bà Ba">
-                             <div class="media-content">
-                                <strong>Áo Bà Ba & Khăn Rằn:</strong> Hình ảnh đặc trưng, gắn liền với cuộc sống khai hoang và sông nước của người Kinh ở Nam Bộ.
-                             </div>
-                        </li>
-                    </ul>
-                    
-                    <h4>3. Nghệ Thuật Dân Gian & Tín Ngưỡng</h4>
-                    <ul class="media-list">
-                        <li class="media-list-item">
-                             <img src="../images/kinh/mua-roi-nuoc.jpg" alt="Múa Rối Nước">
-                             <div class="media-content">
-                                <strong>Múa Rối Nước:</strong> Loại hình nghệ thuật sân khấu độc nhất vô nhị, sinh ra từ các ao hồ ở đồng bằng sông Hồng. 100% là của người Kinh.
-                             </div>
-                        </li>
-                         <li class="media-list-item">
-                             <img src="../images/kinh/tin-nguong.jpg" alt="Đạo Mẫu">
-                             <div class="media-content">
-                                <strong>Tín ngưỡng Thờ Mẫu (Đạo Mẫu):</strong> Một tín ngưỡng dân gian bản địa, tôn thờ các Mẫu thần (Mẫu Trời, Mẫu Đất, Mẫu Nước) rất đặc trưng của người Kinh.
-                             </div>
-                        </li>
-                        <li class="media-list-item">
-                             <img src="../images/kinh/quan-ho.jpg" alt="Quan Họ">
-                             <div class="media-content">
-                                <strong>Hát Quan Họ:</strong> Hình thức hát giao duyên đặc trưng của người Kinh ở vùng Kinh Bắc (Bắc Ninh, Bắc Giang).
-                             </div>
-                        </li>
-                    </ul>
-
+        <section class="mb-20 gs-reveal">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="h-1 flex-1 bg-gray-300"></div>
+                <h2 class="text-3xl font-bold text-gray-800 uppercase tracking-widest text-center">🏛️ Trụ Cột Đạo Đức</h2>
+                <div class="h-1 flex-1 bg-gray-300"></div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-cinnabar hover:-translate-y-2 transition duration-300">
+                    <div class="text-4xl mb-4">🙏</div>
+                    <h3 class="text-xl font-bold text-cinnabar mb-3">Đạo Hiếu</h3>
+                    <p class="text-gray-600 text-justify text-sm leading-relaxed">Thờ cúng tổ tiên là tín ngưỡng quan trọng nhất...</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-cinnabar hover:-translate-y-2 transition duration-300">
+                    <div class="text-4xl mb-4">📚</div>
+                    <h3 class="text-xl font-bold text-cinnabar mb-3">Tôn Sư Trọng Đạo</h3>
+                    <p class="text-gray-600 text-justify text-sm leading-relaxed">Tri thức và người thầy luôn được đặt ở vị trí trang trọng...</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-cinnabar hover:-translate-y-2 transition duration-300">
+                    <div class="text-4xl mb-4">🏮</div>
+                    <h3 class="text-xl font-bold text-cinnabar mb-3">Tình Làng Nghĩa Xóm</h3>
+                    <p class="text-gray-600 text-justify text-sm leading-relaxed">"Bán anh em xa, mua láng giềng gần"...</p>
                 </div>
             </div>
-        </main>
-    </div>
+        </section>
 
-    <div id="footer-placeholder"></div>
+        <section class="mb-20 gs-left">
+            <div class="flex items-center gap-4 mb-8"><h2 class="text-3xl font-bold text-gray-800 uppercase tracking-widest">🍜 Tinh Hoa Ẩm Thực</h2><div class="h-1 flex-1 bg-gray-300"></div></div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="culture-card group relative h-64 rounded-lg overflow-hidden shadow-md cursor-pointer">
+                    <img src="../images/kinh/pho.jpg" alt="Phở Việt Nam" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90"></div>
+                    <div class="absolute bottom-4 left-4 text-white"><h3 class="text-xl font-bold">Phở</h3><p class="text-xs text-gray-200">Quốc hồn quốc túy.</p></div>
+                </div>
+                <div class="culture-card group relative h-64 rounded-lg overflow-hidden shadow-md cursor-pointer">
+                    <img src="../images/kinh/banh-chung.jpg" alt="Bánh Chưng" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90"></div>
+                    <div class="absolute bottom-4 left-4 text-white"><h3 class="text-xl font-bold">Bánh Chưng</h3><p class="text-xs text-gray-200">Linh hồn ngày Tết.</p></div>
+                </div>
+                <div class="culture-card group relative h-64 rounded-lg overflow-hidden shadow-md cursor-pointer">
+                    <img src="../images/kinh/nuoc-mam.jpg" alt="Nước Mắm" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90"></div>
+                    <div class="absolute bottom-4 left-4 text-white"><h3 class="text-xl font-bold">Nước Mắm</h3><p class="text-xs text-gray-200">Gia vị trứ danh.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20 gs-right">
+            <div class="flex items-center gap-4 mb-8"><div class="h-1 flex-1 bg-gray-300"></div><h2 class="text-3xl font-bold text-gray-800 uppercase tracking-widest text-right">🎨 Nghệ Thuật & Di Sản</h2></div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-[#FDFBF7] p-6 rounded-xl shadow border border-gray-200 flex flex-col gap-4">
+                    <h3 class="text-xl font-bold text-cinnabar">Trang Phục Truyền Thống</h3>
+                    <div class="overflow-hidden rounded-lg h-64 w-full"><img src="../images/kinh/ao-ngu-than.jpg" alt="Áo Ngũ Thân" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                    <p class="text-sm text-gray-700 text-justify"><strong>Áo Ngũ Thân:</strong> Tiền thân của Áo Dài hiện đại...</p>
+                </div>
+                <div class="bg-[#FDFBF7] p-6 rounded-xl shadow border border-gray-200 flex flex-col gap-4">
+                    <h3 class="text-xl font-bold text-cinnabar">Múa Rối Nước</h3>
+                    <div class="overflow-hidden rounded-lg h-64 w-full"><img src="../images/kinh/mua-roi-nuoc.jpg" alt="Múa Rối Nước" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                    <p class="text-sm text-gray-700 text-justify">Loại hình nghệ thuật độc nhất vô nhị...</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20 gs-reveal">
+            <div class="bg-[#1a1a1a] text-[#F0EAD6] rounded-xl overflow-hidden shadow-2xl border border-gray-700">
+                <div class="p-8 text-center border-b border-gray-700">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#DAA520] mb-2 font-[Playfair_Display]">Bảo Vật Quốc Gia</h2>
+                    <p class="text-gray-400 italic">"Tiếng trống đồng âm vang ngàn năm lịch sử"</p>
+                </div>
+                <div class="flex flex-col md:flex-row">
+                    <div class="w-full md:w-2/3 h-[500px] relative museum-light overflow-hidden group">
+                        <div class="sketchfab-embed-wrapper w-full h-full">
+                            <iframe title="Trống Đồng Việt Nam" class="w-full h-[calc(100%+60px)] -mt-[60px]" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/7e38e31e0ac64f43a2035aecfc32f6b2/embed?autostart=1&ui_infos=0&ui_watermark=0&ui_controls=1&transparent=1"></iframe>
+                        </div>
+                        <div class="absolute bottom-6 left-0 w-full text-center pointer-events-none transition-opacity duration-500 group-hover:opacity-0">
+                             <span class="bg-black/50 text-white px-4 py-2 rounded-full text-xs backdrop-blur-md border border-white/20">🖱️ Xoay để xem chi tiết hoa văn</span>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/3 p-8 flex flex-col justify-center bg-[#252525]">
+                        <h3 class="text-2xl font-bold text-[#DAA520] mb-4">Trống Đồng Đông Sơn</h3>
+                        <div class="space-y-4 text-sm text-gray-300 leading-relaxed text-justify">
+                            <p>Trống đồng (tiêu biểu là trống Ngọc Lũ, Hoàng Hạ) là đỉnh cao nghệ thuật...</p>
+                            <p><strong class="text-[#DAA520]">Ý nghĩa:</strong> Mặt trống là hình ảnh mặt trời ở giữa...</p>
+                            <div class="mt-6 p-4 border border-[#DAA520]/30 rounded bg-[#DAA520]/10"><p class="italic text-[#DAA520] text-center">"Cốt cách phi phàm, tinh hoa hội tụ"</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12 gs-reveal">
+            <div class="bg-[#FDFBF7] rounded-xl overflow-hidden shadow-lg flex flex-col md:flex-row border border-gray-200">
+                <div class="md:w-1/2 h-64 md:h-auto relative"><img src="../images/kinh/tin-nguong.jpg" alt="Tín Ngưỡng Thờ Mẫu" class="w-full h-full object-cover absolute inset-0"></div>
+                <div class="md:w-1/2 p-10 flex flex-col justify-center">
+                    <h2 class="text-3xl font-bold text-cinnabar mb-4">Tín Ngưỡng Thờ Mẫu</h2>
+                    <p class="text-lg italic mb-6 text-gray-600">"Tháng Tám giỗ Cha, tháng Ba giỗ Mẹ"</p>
+                    <p class="text-sm leading-loose text-justify text-gray-700">Đạo Mẫu là tín ngưỡng bản địa của người Việt...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="../js/layout.js"></script>
 
     <script>
-        async function loadHTML(placeholderId, filePath) {
-            try {
-                const response = await fetch(filePath);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const html = await response.text();
-                document.getElementById(placeholderId).innerHTML = html;
-            } catch (error) {
-                console.error(`Could not load ${filePath}:`, error);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // Đường dẫn đến các file include (từ góc nhìn của dan-toc-kinh.html)
-            loadHTML('header-placeholder', '../includes/header.html');
-            loadHTML('navbar-placeholder', '../includes/navbar.html');
-            loadHTML('footer-placeholder', '../includes/footer.html');
-        });
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.from(".gs-reveal", { scrollTrigger: { trigger: ".gs-reveal", start: "top 85%" }, opacity: 0, y: 50, duration: 1, ease: "power2.out" });
+        gsap.from(".gs-left", { scrollTrigger: { trigger: ".gs-left", start: "top 80%" }, opacity: 0, x: -50, duration: 1, ease: "power2.out" });
+        gsap.from(".gs-right", { scrollTrigger: { trigger: ".gs-right", start: "top 80%" }, opacity: 0, x: 50, duration: 1, ease: "power2.out" });
     </script>
 </body>
 </html>

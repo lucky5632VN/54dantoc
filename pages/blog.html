@@ -3,35 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - Bản Sắc Việt</title>
+    <title>Blog Văn Hóa - Bản Sắc Việt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
-    <header>
-        <h1>Bản Sắc Việt</h1>
-        <p>Nơi hội tụ tinh hoa văn hóa Việt</p>
-    </header>
+<body class="flex flex-col min-h-screen">
+    <div class="paper-texture"></div>
 
-    <nav>
-        <ul>
-            <li><a href="../index.html">Trang Chủ</a></li>
-            <li><a href="gioi-thieu.html">Giới Thiệu</a></li>
-            <li><a href="cac-dan-toc.html">Các Dân Tộc</a></li>
-            <li><a href="ban-do.html">Bản Đồ Văn Hóa</a></li>
-            <li><a href="blog.html" class="active">Blog</a></li>
-            <li><a href="lien-he.html">Liên Hệ</a></li>
-        </ul>
-    </nav>
+    <main class="flex-grow container mx-auto px-6 py-10 pt-28">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-cinnabar mb-2">Góc Nhìn Văn Hóa</h1>
+            <p class="text-gray-600">Những câu chuyện nhỏ về phong tục, tập quán và nét đẹp đời thường.</p>
+        </div>
 
-    <div class="container">
-        <main class="main-content">
-            <h2>Blog / Câu Chuyện Văn Hóa</h2>
-            <p>Tính năng này đang được phát triển!</p>
-        </main>
-    </div>
+        <div class="grid md:grid-cols-3 gap-8">
+            <article class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition duration-300 flex flex-col">
+                <div class="h-48 bg-gray-200 relative"><div class="absolute inset-0 flex items-center justify-center text-gray-400 bg-gray-100">[Ảnh: Bánh Chưng]</div></div>
+                <div class="p-6 flex-1 flex flex-col">
+                    <div class="text-xs text-cinnabar font-bold uppercase mb-2">Ẩm Thực</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-cinnabar cursor-pointer">Sự tích Bánh Chưng Bánh Giày...</h3>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-3">Không chỉ là món ăn ngày Tết...</p>
+                    <a href="#" class="mt-auto text-cinnabar font-bold text-sm hover:underline">Đọc tiếp &rarr;</a>
+                </div>
+            </article>
+            <article class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition duration-300 flex flex-col">
+                <div class="h-48 bg-gray-200 relative"><div class="absolute inset-0 flex items-center justify-center text-gray-400 bg-gray-100">[Ảnh: Áo Dài]</div></div>
+                <div class="p-6 flex-1 flex flex-col">
+                    <div class="text-xs text-cinnabar font-bold uppercase mb-2">Trang Phục</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-cinnabar cursor-pointer">Áo Dài - Từ Cung Đình Ra Phố Thị</h3>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-3">Hành trình biến đổi...</p>
+                    <a href="#" class="mt-auto text-cinnabar font-bold text-sm hover:underline">Đọc tiếp &rarr;</a>
+                </div>
+            </article>
+             <article class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition duration-300 flex flex-col">
+                <div class="h-48 bg-gray-200 relative"><div class="absolute inset-0 flex items-center justify-center text-gray-400 bg-gray-100">[Ảnh: Trầu Cau]</div></div>
+                <div class="p-6 flex-1 flex flex-col">
+                    <div class="text-xs text-cinnabar font-bold uppercase mb-2">Phong Tục</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-cinnabar cursor-pointer">Miếng Trầu Là Đầu Câu Chuyện</h3>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-3">Tại sao trong mọi lễ cưới hỏi...</p>
+                    <a href="#" class="mt-auto text-cinnabar font-bold text-sm hover:underline">Đọc tiếp &rarr;</a>
+                </div>
+            </article>
+        </div>
+    </main>
 
-    <footer>
-        <p>&copy; 2025 Bản Sắc Việt. Bảo lưu mọi quyền.</p>
-    </footer>
+    <script type="module" src="../js/layout.js"></script>
 </body>
 </html>
