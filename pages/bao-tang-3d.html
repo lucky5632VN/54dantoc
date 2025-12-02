@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>Bảo Tàng Số 3D - Bản Sắc Việt</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <style>
+        body { background-color: #0f0f0f !important; color: #e0e0e0 !important; overflow: hidden; /* Khóa cuộn trang để 3D full màn */ }
+        
+        /* Danh sách bên phải */
+        .artifact-item {
+            transition: all 0.2s ease;
+            border-right: 3px solid transparent;
+            padding: 15px;
+        }
+        .artifact-item:hover { background-color: #222; }
+        .artifact-item.active {
+            background-color: #1a1a1a;
+            border-right-color: #DAA520;
+            color: #DAA520;
+        }
+        .artifact-item img { opacity: 0.6; transition: opacity 0.3s; width: 60px; height: 60px; }
+        .artifact-item.active img { opacity: 1; border: 2px solid #DAA520; }
+
+        /* Ánh sáng tập trung */
+        .museum-light {
+            background: radial-gradient(circle at center, rgba(255,255,255,0.08) 0%, #000 90%);
+        }
+        
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-track { background: #111; }
+    </style>
+</head>
+<body class="flex flex-col h-screen font-[Playfair_Display]">
+
+    <main class="flex-grow w-full h-full pt-20 flex flex-col">
+        
+        <div class="flex-grow flex flex-col lg:flex-row overflow-hidden border-t border-[#333] gs-reveal">
+            
+            <div class="w-full lg:w-4/5 relative flex flex-col border-r border-[#333]">
+                
+                <div class="flex-grow relative museum-light overflow-hidden group" id="viewer-container">
+                    
+                    <iframe id="main-iframe" class="w-full h-[calc(100%+60px)] -mt-[60px]" 
+                        frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" 
+                        allow="autoplay; fullscreen; xr-spatial-tracking" src="">
+                    </iframe>
+                    
+                    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 pointer-events-none opacity-60 group-hover:opacity-0 transition-opacity duration-500">
+                        <span class="bg-black/70 text-white px-6 py-2 rounded-full text-sm backdrop-blur-md border border-white/10 tracking-wider">
+                           🖱️ Xoay - Di chuyển - Phóng to
+                        </span>
+                    </div>
+                </div>
+
+                <div class="absolute top-6 left-6 max-w-md pointer-events-none">
+                    <h1 class="text-4xl md:text-5xl font-bold text-white drop-shadow-lg mb-2" id="info-title">Tên Vật Phẩm</h1>
+                    <div class="w-20 h-1 bg-[#DAA520] mb-3 shadow-lg"></div>
+                    <p id="info-desc" class="text-gray-300 text-sm bg-black/60 p-4 rounded-lg backdrop-blur-md border-l-2 border-[#DAA520] shadow-xl line-clamp-3">
+                        Mô tả ngắn...
+                    </p>
+                </div>
+                
+                <div class="absolute top-6 right-6 pointer-events-auto">
+                    <button onclick="showFullInfo()" class="bg-[#DAA520] text-black px-4 py-2 rounded font-bold hover:bg-white transition shadow-lg">
+                        📖 Chi tiết
+                    </button>
+                </div>
+            </div>
+
+            <div class="w-full lg:w-1/5 bg-[#161616] flex flex-col shadow-2xl z-10">
+                <div class="p-5 border-b border-[#333] bg-[#111]">
+                    <h3 class="text-[#DAA520] font-bold text-xs uppercase tracking-[0.2em] text-center">Bộ Sưu Tập</h3>
+                </div>
+                <div class="overflow-y-auto flex-grow" id="artifact-list">
+                    </div>
+                
+                <div class="p-3 text-center text-xs text-gray-600 border-t border-[#333] bg-[#0f0f0f]">
+                    Bảo tàng số 3D Việt Nam
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script type="module" src="../js/layout.js"></script>
+
+    <script>
+        // --- KHO DỮ LIỆU BẢO TÀNG (FULL BỘ SƯU TẬP) ---
+        const artifacts = [
+            // 1. BIỂU TƯỢNG QUỐC GIA
+            {
+                id: "dong-son-drum",
+                sketchfabId: "7e38e31e0ac64f43a2035aecfc32f6b2", 
+                title: "Trống Đồng Đông Sơn",
+                desc: "Bảo vật quốc gia, kết tinh của nền văn minh sông Hồng rực rỡ. Mặt trống là hình ảnh mặt trời và đời sống người Việt cổ.",
+                thumb: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Dong_Son_bronze_drum_02.jpg/800px-Dong_Son_bronze_drum_02.jpg"
+            },
+            {
+                id: "chua-mot-cot",
+                sketchfabId: "9b2562f8884141c0b1777e1a1c05887c", 
+                title: "Chùa Một Cột",
+                desc: "Biểu tượng của thủ đô Hà Nội và Phật giáo Việt Nam. Kiến trúc 'liên hoa đài' độc đáo tựa đóa sen nghìn năm.",
+                thumb: "https://images.unsplash.com/photo-1599707367072-cd6ad66cc5a1?q=80&w=600&auto=format&fit=crop"
+            },
+            {
+                id: "bia-rua",
+                sketchfabId: "c4f76076396d46609955225500767005", // ID Bia Rùa
+                title: "Rùa Đội Bia Đá",
+                desc: "Hình ảnh quen thuộc tại Văn Miếu - Quốc Tử Giám, thể hiện sự trường tồn của tri thức và truyền thống hiếu học.",
+                thumb: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Stelae_of_Doctors_at_Van_Mieu.jpg/800px-Stelae_of_Doctors_at_Van_Mieu.jpg"
+            },
+
+            // 2. VĂN MINH LÚA NƯỚC
+            {
+                id: "con-trau",
+                sketchfabId: "93b959f40b804d1abf56baf158132bdd", // ID Con Trâu
+                title: "Con Trâu Việt Nam",
+                desc: "'Con trâu là đầu cơ nghiệp'. Loài vật hiền lành, cần cù gắn liền với người nông dân và nền văn minh lúa nước.",
+                thumb: "https://images.unsplash.com/photo-1533283752582-49b737a092a6?q=80&w=600&auto=format&fit=crop"
+            },
+            {
+                id: "non-la",
+                sketchfabId: "08338678a712414fbdbf392e6d8ce53e", 
+                title: "Nón Lá",
+                desc: "Vẻ đẹp dung dị, che mưa che nắng, gắn liền với hình ảnh người mẹ, người chị trên cánh đồng lúa.",
+                thumb: "https://images.unsplash.com/photo-1528125757672-2d72d1d52374?q=80&w=600&auto=format&fit=crop"
+            },
+            {
+                id: "thuyen-go",
+                sketchfabId: "52e90817205d42679655957657105339", // ID Thuyền gỗ
+                title: "Thuyền Nan Sông Nước",
+                desc: "Phương tiện di chuyển chính của cư dân vùng sông nước miền Tây và các làng chài ven biển.",
+                thumb: "https://images.unsplash.com/photo-1565621956272-3d83021ae428?q=80&w=600&auto=format&fit=crop"
+            },
+
+            // 3. GỐM SỨ & MỸ THUẬT
+            {
+                id: "lu-huong",
+                sketchfabId: "23752736700448379342628323236993", 
+                title: "Lư Hương Rồng",
+                desc: "Vật phẩm thờ cúng linh thiêng, chạm khắc hình rồng tinh xảo, thể hiện lòng thành kính với tổ tiên.",
+                thumb: "https://img.freepik.com/premium-photo/antique-incense-burner-isolated-black-background_145646-89.jpg"
+            },
+            {
+                id: "gom-su",
+                sketchfabId: "62350d90285b49c9a3745266d0520664", 
+                title: "Bình Gốm Hoa Lam",
+                desc: "Tinh hoa gốm sứ Bát Tràng/Chu Đậu với nước men lam đặc trưng và họa tiết sơn thủy hữu tình.",
+                thumb: "https://gomsubattrang.vn/uploads/news/2019_05/binh-hut-loc-gom-bat-trang-men-ran-co-boc-dong-cao-cap.jpg"
+            },
+            {
+                id: "tranh-dong-ho",
+                sketchfabId: "e7b1b076f44849f68d5fc814149e71d8", 
+                title: "Tranh Đông Hồ (Đám Cưới Chuột)",
+                desc: "Dòng tranh dân gian khắc gỗ nổi tiếng của Bắc Ninh, mang đậm hơi thở cuộc sống bình dị và hóm hỉnh.",
+                thumb: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Dam_cuoi_chuot.jpg/640px-Dam_cuoi_chuot.jpg"
+            },
+
+            // 4. KIẾN TRÚC
+            {
+                id: "cong-lang",
+                sketchfabId: "4fad9643769f4ff5b71ea66d7f42b8c5",
+                title: "Cổng Làng Cổ",
+                desc: "Ranh giới ước lệ của làng quê Bắc Bộ. Nơi lưu giữ những kỷ niệm và là biểu tượng của sự bình yên.",
+                thumb: "https://images.unsplash.com/photo-1605807402482-37c6a47233c2?q=80&w=600&auto=format&fit=crop"
+            },
+            {
+                id: "thuy-dinh",
+                sketchfabId: "3baf19c888064c43816ba5552fd85a4c",
+                title: "Thủy Đình",
+                desc: "Sân khấu múa rối nước giữa hồ, nét kiến trúc độc đáo phục vụ môn nghệ thuật chỉ có ở Việt Nam.",
+                thumb: "https://media.sketchfab.com/models/3baf19c888064c43816ba5552fd85a4c/thumbnails/5ae3c115a25c441bbb9e6024b05bd588/b2512ea6fa524589aa05c4498c091e37.jpeg"
+            }
+        ];
+
+        let currentIndex = 0;
+
+        function initMuseum() {
+            const listContainer = document.getElementById('artifact-list');
+            
+            artifacts.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = `artifact-item flex items-center gap-4 cursor-pointer border-b border-[#222] ${index === 0 ? 'active' : ''}`;
+                div.onclick = () => loadArtifact(index);
+                
+                div.innerHTML = `
+                    <img src="${item.thumb}" class="rounded bg-black object-cover border border-gray-700 shadow-sm" alt="${item.title}">
+                    <div>
+                        <h4 class="text-sm font-bold text-gray-200 leading-tight mb-1 hover:text-[#DAA520] transition">${item.title}</h4>
+                        <span class="text-[10px] text-gray-500 uppercase tracking-wider">Hiện vật 0${index + 1}</span>
+                    </div>
+                `;
+                listContainer.appendChild(div);
+            });
+
+            loadArtifact(0);
+        }
+
+        function loadArtifact(index) {
+            currentIndex = index;
+            const item = artifacts[index];
+
+            document.querySelectorAll('.artifact-item').forEach((el, i) => {
+                el.classList.toggle('active', i === index);
+            });
+
+            // Hiệu ứng chuyển đổi chữ
+            const titleEl = document.getElementById('info-title');
+            const descEl = document.getElementById('info-desc');
+            
+            gsap.to([titleEl, descEl], { opacity: 0, duration: 0.2, onComplete: () => {
+                titleEl.innerText = item.title;
+                descEl.innerText = item.desc;
+                gsap.to([titleEl, descEl], { opacity: 1, duration: 0.3 });
+            }});
+
+            // Load 3D
+            const iframe = document.getElementById('main-iframe');
+            // Thêm tham số ui_theme=dark để giao diện Sketchfab tối màu đồng bộ
+            iframe.src = `https://sketchfab.com/models/${item.sketchfabId}/embed?autostart=1&ui_infos=0&ui_watermark=0&ui_controls=1&transparent=1&ui_theme=dark`;
+        }
+
+        function showFullInfo() {
+            alert(artifacts[currentIndex].desc);
+        }
+
+        initMuseum();
+        gsap.from(".gs-reveal", { opacity: 0, y: 30, duration: 1, stagger: 0.2 });
+
+    </script>
+</body>
+</html>

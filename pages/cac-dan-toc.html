@@ -4,65 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Các Dân Tộc - Bản Sắc Việt</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
-    <header>
-        <h1>Bản Sắc Việt</h1>
-        <p>Nơi hội tụ tinh hoa văn hóa Việt</p>
-    </header>
+<body class="flex flex-col min-h-screen">
+    
+    <div class="paper-texture"></div>
 
-    <nav>
-        <ul>
-            <li><a href="../index.html">Trang Chủ</a></li>
-            <li><a href="gioi-thieu.html">Giới Thiệu</a></li>
-            <li><a href="cac-dan-toc.html" class="active">Các Dân Tộc</a></li>
-            <li><a href="ban-do.html">Bản Đồ Văn Hóa</a></li>
-            <li><a href="blog.html">Blog</a></li>
-            <li><a href="lien-he.html">Liên Hệ</a></li>
-        </ul>
-    </nav>
+    <main class="flex-grow container mx-auto px-6 py-10 pt-24">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-cinnabar mb-4 font-[Playfair_Display]">54 Dân Tộc Anh Em</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto italic">
+                "Non sông gấm vóc Việt Nam do phụ nữ ta, trẻ cũng như già, ra sức dệt thêu mà thêm tốt đẹp, rực rỡ."
+            </p>
+        </div>
 
-    <div class="container">
-        <main class="main-content">
-            <h2>Khám Phá 54 Dân Tộc Việt Nam</h2>
-            <p>Việt Nam là một quốc gia đa văn hóa với 54 dân tộc anh em cùng chung sống. Mỗi dân tộc sở hữu một bản sắc, ngôn ngữ, và truyền thống đạo đức riêng biệt, góp phần tạo nên một bức tranh văn hóa đa dạng và phong phú.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             
-            <div class="ethnic-grid">
-
-                <div class="ethnic-card">
-                    <img src="../images/kinh/logo-dan-toc.jpg" alt="Dân tộc Kinh">
-                    <div class="ethnic-card-content">
-                        <h3>Dân tộc Kinh (Việt)</h3>
-                        <p>Dân tộc chiếm đa số, với nền văn minh lúa nước lâu đời và là nền tảng văn hóa chính của quốc gia.</p>
-                        <a href="dan-toc-kinh.html">Xem Chi Tiết</a>
-                    </div>
+            <div class="group bg-white rounded-xl shadow-lg overflow-hidden hover:-translate-y-2 transition duration-300 border border-gray-200 hover:border-cinnabar">
+                <div class="overflow-hidden h-48">
+                    <img src="../images/kinh/logo-dan-toc.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                 </div>
-
-                <div class="ethnic-card">
-                    <img src="https://picsum.photos/seed/tay/400/280" alt="Dân tộc Tày">
-                    <div class="ethnic-card-content">
-                        <h3>Dân tộc Tày</h3>
-                        <p>Dân tộc có dân số lớn thứ hai, nổi tiếng với truyền thống hát Then và các làn điệu dân ca đặc sắc.</p>
-                        <a href="#">Xem Chi Tiết</a>
-                    </div>
+                <div class="p-6">
+                    <h3 class="text-2xl font-bold mb-2 text-gray-800 font-[Playfair_Display]">Dân tộc Kinh</h3>
+                    <p class="text-gray-600 mb-4 text-sm line-clamp-2">Dân tộc chiếm đa số, văn minh lúa nước, áo dài, quan họ và những lễ hội đình làng truyền thống.</p>
+                    
+                    <a href="../dan_toc/dan-toc-kinh.html" class="inline-block px-6 py-2 bg-cinnabar text-white rounded-full text-sm font-bold hover:bg-red-800 transition shadow-md">
+                        Khám phá &rarr;
+                    </a>
                 </div>
-                
-                <div class="ethnic-card">
-                    <img src="https://picsum.photos/seed/thai/400/280" alt="Dân tộc Thái">
-                    <div class="ethnic-card-content">
-                        <h3>Dân tộc Thái</h3>
-                        <p>Nổi tiếng với điệu múa Xòe, trang phục thổ cẩm rực rỡ và văn hóa ẩm thực độc đáo.</p>
-                        <a href="#">Xem Chi Tiết</a>
-                    </div>
-                </div>
-                
             </div>
-        </main>
-    </div>
 
-    <footer>
-        <p>&copy; 2025 Bản Sắc Việt. Bảo lưu mọi quyền.</p>
-    </footer>
+            <div class="group bg-white rounded-xl shadow-lg overflow-hidden hover:-translate-y-2 transition duration-300 border border-gray-200 opacity-80">
+                <div class="overflow-hidden h-48 relative">
+                    <div class="absolute inset-0 bg-black/10 z-10"></div>
+                    <img src="https://picsum.photos/seed/tay/400/280" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-500">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-2xl font-bold mb-2 text-gray-800 font-[Playfair_Display]">Dân tộc Tày</h3>
+                    <p class="text-gray-600 mb-4 text-sm line-clamp-2">Nổi tiếng với làn điệu hát Then, đàn Tính và những nếp nhà sàn ven suối thơ mộng.</p>
+                    <span class="text-xs font-bold border border-gray-400 text-gray-500 px-3 py-1 rounded-full cursor-default">
+                        Sắp ra mắt
+                    </span>
+                </div>
+            </div>
+            
+            <div class="group bg-white rounded-xl shadow-lg overflow-hidden hover:-translate-y-2 transition duration-300 border border-gray-200 opacity-80">
+                <div class="overflow-hidden h-48 relative">
+                     <div class="absolute inset-0 bg-black/10 z-10"></div>
+                    <img src="https://picsum.photos/seed/thai/400/280" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-500">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-2xl font-bold mb-2 text-gray-800 font-[Playfair_Display]">Dân tộc Thái</h3>
+                    <p class="text-gray-600 mb-4 text-sm line-clamp-2">Rực rỡ với điệu múa Xòe, khăn Piêu và văn hóa ẩm thực Tây Bắc độc đáo.</p>
+                    <span class="text-xs font-bold border border-gray-400 text-gray-500 px-3 py-1 rounded-full cursor-default">
+                        Sắp ra mắt
+                    </span>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+
+    <script type="module" src="../js/layout.js"></script>
 </body>
 </html>

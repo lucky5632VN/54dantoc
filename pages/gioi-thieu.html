@@ -4,37 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giới Thiệu - Bản Sắc Việt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
-    <header>
-        <h1>Bản Sắc Việt</h1>
-        <p>Nơi hội tụ tinh hoa văn hóa Việt</p>
-    </header>
+<body class="flex flex-col min-h-screen font-[Playfair_Display]">
 
-    <nav>
-        <ul>
-            <li><a href="../index.html">Trang Chủ</a></li>
-            <li><a href="gioi-thieu.html" class="active">Giới Thiệu</a></li>
-            <li><a href="cac-dan-toc.html">Các Dân Tộc</a></li>
-            <li><a href="ban-do.html">Bản Đồ Văn Hóa</a></li>
-            <li><a href="blog.html">Blog</a></li>
-            <li><a href="lien-he.html">Liên Hệ</a></li>
-        </ul>
-    </nav>
+    <div class="paper-texture"></div>
 
-    <div class="container">
-        <main class="main-content">
-            <h2>Về Chúng Tôi: Sứ Mệnh Gìn Giữ Cội Nguồn</h2>
-            <p>Dự án "Bản Sắc Việt" là một nỗ lực phi lợi nhuận, được xây dựng với niềm đam mê và lòng tự hào dân tộc. Chúng tôi tin rằng, hiểu về văn hóa, đạo đức của 54 dân tộc anh em là cách tốt nhất để gìn giữ bản sắc Việt Nam trong thời kỳ hội nhập.</p>
+    <main class="flex-grow container mx-auto px-6 py-10 pt-28 max-w-4xl">
+        <div class="text-center mb-12 gs-reveal">
+            <h1 class="text-4xl md:text-5xl font-bold text-cinnabar mb-4">Về Dự Án "Bản Sắc Việt"</h1>
+            <div class="w-24 h-1 bg-cinnabar mx-auto mb-6"></div>
+            <p class="text-xl italic text-gray-600">"Dân ta phải biết sử ta,<br>Cho tường gốc tích nước nhà Việt Nam."</p>
+            <p class="text-sm mt-2">- Hồ Chí Minh -</p>
+        </div>
 
-            <h3>Sứ Mệnh</h3>
-            <p>Trở thành một "bảo tàng số" toàn diện và hấp dẫn nhất, nơi mọi người, đặc biệt là thế hệ trẻ, có thể dễ dàng tìm hiểu, học hỏi và cảm thấy tự hào về sự đa dạng văn hóa của đất nước mình.</p>
-        </main>
-    </div>
+        <div class="bg-white p-8 md:p-12 rounded-xl shadow-xl border border-gray-200 gs-reveal">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Sứ Mệnh Của Chúng Tôi</h2>
+            <p class="text-gray-700 leading-loose text-justify mb-6">
+                Dự án <strong>Bản Sắc Việt</strong> là một nỗ lực phi lợi nhuận, được xây dựng với niềm đam mê và lòng tự hào dân tộc sâu sắc. Trong thời đại số hóa và hội nhập toàn cầu, những giá trị văn hóa truyền thống đôi khi bị lãng quên.
+            </p>
+            <p class="text-gray-700 leading-loose text-justify mb-6">
+                Chúng tôi tin rằng, việc tạo ra một "Bảo tàng số" dễ tiếp cận, sinh động và hiện đại là cách tốt nhất để thế hệ trẻ kết nối lại với cội nguồn. Tại đây, văn hóa của 54 dân tộc anh em không chỉ là những dòng chữ khô khan, mà là những câu chuyện sống động, những hình ảnh rực rỡ và những bài học đạo đức ngàn đời.
+            </p>
+            <div class="grid md:grid-cols-3 gap-6 mt-8">
+                <div class="text-center p-4 bg-[#FDFBF7] rounded-lg border border-gray-200">
+                    <div class="text-4xl mb-2">🎯</div>
+                    <h3 class="font-bold text-cinnabar">Lưu Giữ</h3>
+                    <p class="text-sm text-gray-600">Số hóa tư liệu văn hóa quý giá.</p>
+                </div>
+                <div class="text-center p-4 bg-[#FDFBF7] rounded-lg border border-gray-200">
+                    <div class="text-4xl mb-2">🌏</div>
+                    <h3 class="font-bold text-cinnabar">Lan Tỏa</h3>
+                    <p class="text-sm text-gray-600">Quảng bá hình ảnh Việt Nam ra thế giới.</p>
+                </div>
+                <div class="text-center p-4 bg-[#FDFBF7] rounded-lg border border-gray-200">
+                    <div class="text-4xl mb-2">❤️</div>
+                    <h3 class="font-bold text-cinnabar">Kết Nối</h3>
+                    <p class="text-sm text-gray-600">Gắn kết cộng đồng qua giá trị nhân văn.</p>
+                </div>
+            </div>
+        </div>
+    </main>
 
-    <footer>
-        <p>&copy; 2025 Bản Sắc Việt. Bảo lưu mọi quyền.</p>
-    </footer>
+    <script type="module" src="../js/layout.js"></script>
+
+    <script>
+        gsap.from(".gs-reveal", { opacity: 0, y: 30, duration: 1, stagger: 0.2 });
+    </script>
 </body>
 </html>

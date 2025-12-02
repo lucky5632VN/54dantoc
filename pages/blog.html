@@ -3,35 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - Bản Sắc Việt</title>
+    <title>Blog Văn Hóa - Bản Sắc Việt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* Hiệu ứng nút lọc */
+        .filter-btn.active {
+            background-color: #C62828;
+            color: white;
+            border-color: #C62828;
+        }
+        /* Hiệu ứng ảnh bài viết */
+        .blog-card img { transition: transform 0.5s ease; }
+        .blog-card:hover img { transform: scale(1.1); }
+    </style>
 </head>
-<body>
-    <header>
-        <h1>Bản Sắc Việt</h1>
-        <p>Nơi hội tụ tinh hoa văn hóa Việt</p>
-    </header>
+<body class="flex flex-col min-h-screen font-[Playfair_Display]">
 
-    <nav>
-        <ul>
-            <li><a href="../index.html">Trang Chủ</a></li>
-            <li><a href="gioi-thieu.html">Giới Thiệu</a></li>
-            <li><a href="cac-dan-toc.html">Các Dân Tộc</a></li>
-            <li><a href="ban-do.html">Bản Đồ Văn Hóa</a></li>
-            <li><a href="blog.html" class="active">Blog</a></li>
-            <li><a href="lien-he.html">Liên Hệ</a></li>
-        </ul>
-    </nav>
+    <div class="paper-texture"></div>
 
-    <div class="container">
-        <main class="main-content">
-            <h2>Blog / Câu Chuyện Văn Hóa</h2>
-            <p>Tính năng này đang được phát triển!</p>
-        </main>
-    </div>
+    <main class="flex-grow container mx-auto px-6 py-10 pt-28 max-w-6xl">
+        
+        <div class="text-center mb-12 gs-reveal">
+            <h1 class="text-4xl md:text-6xl font-bold text-cinnabar mb-4">Góc Nhìn Văn Hóa</h1>
+            <p class="text-gray-600 italic max-w-2xl mx-auto">
+                "Mỗi câu chuyện là một mảnh ghép, tái hiện lại bức tranh văn hóa rực rỡ ngàn đời của cha ông."
+            </p>
+        </div>
 
-    <footer>
-        <p>&copy; 2025 Bản Sắc Việt. Bảo lưu mọi quyền.</p>
-    </footer>
+        <div class="flex flex-wrap justify-center gap-4 mb-12 gs-reveal">
+            <button onclick="filterPosts('all')" class="filter-btn active px-6 py-2 border border-gray-400 rounded-full hover:border-cinnabar hover:text-cinnabar transition duration-300">Tất Cả</button>
+            <button onclick="filterPosts('am-thuc')" class="filter-btn px-6 py-2 border border-gray-400 rounded-full hover:border-cinnabar hover:text-cinnabar transition duration-300">🍜 Ẩm Thực</button>
+            <button onclick="filterPosts('trang-phuc')" class="filter-btn px-6 py-2 border border-gray-400 rounded-full hover:border-cinnabar hover:text-cinnabar transition duration-300">👘 Trang Phục</button>
+            <button onclick="filterPosts('phong-tuc')" class="filter-btn px-6 py-2 border border-gray-400 rounded-full hover:border-cinnabar hover:text-cinnabar transition duration-300">🏮 Phong Tục</button>
+            <button onclick="filterPosts('lang-nghe')" class="filter-btn px-6 py-2 border border-gray-400 rounded-full hover:border-cinnabar hover:text-cinnabar transition duration-300">🏺 Làng Nghề</button>
+        </div>
+
+        <div id="blog-grid" class="grid md:grid-cols-3 gap-8">
+            </div>
+
+    </main>
+
+    <script type="module" src="../js/layout.js"></script>
+
+    <script>
+        // --- CƠ SỞ DỮ LIỆU BÀI VIẾT (DATABASE MINI) ---
+        // Bạn chỉ cần thêm bài viết mới vào đây là xong!
+        const blogPosts = [
+            {
+                id: 1,
+                category: "am-thuc",
+                title: "Sự Tích Bánh Chưng: Triết Lý Vuông Tròn",
+                desc: "Không chỉ là món ăn, Bánh Chưng còn là vũ trụ quan của người Việt cổ về Trời tròn Đất vuông.",
+                image: "../images/kinh/banh-chung.jpg",
+                date: "20/11/2025"
+            },
+            {
+                id: 2,
+                category: "trang-phuc",
+                title: "Áo Ngũ Thân & Đạo Làm Người",
+                desc: "Năm thân áo tượng trưng cho tứ thân phụ mẫu và bản thân người mặc. Một vẻ đẹp khiêm cung.",
+                image: "../images/kinh/ao-ngu-than.jpg",
+                date: "18/11/2025"
+            },
+            {
+                id: 3,
+                category: "phong-tuc",
+                title: "Miếng Trầu Là Đầu Câu Chuyện",
+                desc: "Tại sao trong mọi lễ cưới hỏi, đám giỗ, hay gặp gỡ ngày xưa đều không thể thiếu cơi trầu?",
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Betel_chewing_supplies_Vietnam.jpg/640px-Betel_chewing_supplies_Vietnam.jpg",
+                date: "15/11/2025"
+            },
+            {
+                id: 4,
+                category: "am-thuc",
+                title: "Phở - Từ Gánh Hàng Rong Đến Di Sản",
+                desc: "Hành trình trăm năm của bát phở Việt, từ món quà sáng dân dã đến tinh hoa ẩm thực thế giới.",
+                image: "../images/kinh/pho.jpg",
+                date: "10/11/2025"
+            },
+            {
+                id: 5,
+                category: "lang-nghe",
+                title: "Gốm Bát Tràng: Hồn Đất Hóa Vàng",
+                desc: "Làng nghề gốm sứ ven sông Hồng với tuổi đời hơn 500 năm lịch sử thăng trầm.",
+                image: "https://cdn.vjshop.vn/hightech/may-anh/top-10-lang-nghe-truyen-thong-o-viet-nam/lang-gom-bat-trang.jpg",
+                date: "05/11/2025"
+            },
+            {
+                id: 6,
+                category: "phong-tuc",
+                title: "Tín Ngưỡng Thờ Mẫu Tam Phủ",
+                desc: "Tìm hiểu về Đạo Mẫu - di sản văn hóa phi vật thể đại diện của nhân loại.",
+                image: "../images/kinh/tin-nguong.jpg",
+                date: "01/11/2025"
+            }
+        ];
+
+        // --- HÀM HIỂN THỊ BÀI VIẾT ---
+        function renderPosts(data) {
+            const grid = document.getElementById('blog-grid');
+            grid.innerHTML = ''; // Xóa nội dung cũ
+
+            // Hiệu ứng mờ dần khi chuyển tab
+            gsap.to(grid, { opacity: 0, duration: 0.2, onComplete: () => {
+                
+                if(data.length === 0) {
+                    grid.innerHTML = `<div class="col-span-3 text-center text-gray-500 italic">Chưa có bài viết nào cho mục này.</div>`;
+                } else {
+                    data.forEach(post => {
+                        const html = `
+                            <article class="blog-card bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition duration-300 flex flex-col border border-gray-100 cursor-pointer group">
+                                <div class="h-56 overflow-hidden relative">
+                                    <img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                                    <div class="absolute top-4 left-4 bg-cinnabar text-white text-xs px-3 py-1 rounded-full font-bold uppercase shadow-md">
+                                        ${getCategoryName(post.category)}
+                                    </div>
+                                </div>
+                                <div class="p-6 flex-1 flex flex-col">
+                                    <div class="text-xs text-gray-400 mb-2 flex items-center gap-2">
+                                        <span>📅 ${post.date}</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-800 mb-3 group-hover:text-cinnabar transition line-clamp-2 font-[Playfair_Display]">
+                                        ${post.title}
+                                    </h3>
+                                    <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow text-justify leading-relaxed">
+                                        ${post.desc}
+                                    </p>
+                                    <div class="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center">
+                                        <span class="text-cinnabar font-bold text-sm group-hover:underline">Đọc tiếp &rarr;</span>
+                                        <span class="text-xs text-gray-400">Admin</span>
+                                    </div>
+                                </div>
+                            </article>
+                        `;
+                        grid.innerHTML += html;
+                    });
+                }
+
+                // Hiện lại với hiệu ứng
+                gsap.to(grid, { opacity: 1, duration: 0.4 });
+                
+                // Hiệu ứng xuất hiện từng cái
+                gsap.from(".blog-card", { y: 30, opacity: 0, duration: 0.5, stagger: 0.1 });
+            }});
+        }
+
+        // Hàm lấy tên danh mục tiếng Việt
+        function getCategoryName(slug) {
+            const names = {
+                'am-thuc': 'Ẩm Thực',
+                'trang-phuc': 'Trang Phục',
+                'phong-tuc': 'Phong Tục',
+                'lang-nghe': 'Làng Nghề'
+            };
+            return names[slug] || 'Khác';
+        }
+
+        // --- HÀM LỌC BÀI VIẾT ---
+        window.filterPosts = function(category) {
+            // 1. Xử lý nút Active
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active', 'bg-cinnabar', 'text-white', 'border-cinnabar'));
+            // Tìm nút vừa bấm để active (dùng event.target hoặc logic đơn giản)
+            event.target.classList.add('active', 'bg-cinnabar', 'text-white', 'border-cinnabar');
+
+            // 2. Lọc dữ liệu
+            if (category === 'all') {
+                renderPosts(blogPosts);
+            } else {
+                const filtered = blogPosts.filter(post => post.category === category);
+                renderPosts(filtered);
+            }
+        }
+
+        // Khởi chạy lần đầu (Hiện tất cả)
+        renderPosts(blogPosts);
+
+        // Hiệu ứng xuất hiện tiêu đề
+        gsap.from(".gs-reveal", { opacity: 0, y: 30, duration: 1, stagger: 0.2 });
+
+    </script>
 </body>
 </html>
