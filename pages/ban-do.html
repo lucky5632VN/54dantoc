@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,72 +9,150 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        .map-container { position: relative; width: 100%; max-width: 600px; margin: 0 auto; }
+        .map-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            /* Increased max-width for better visibility */
+            margin: 0 auto;
+        }
+
         .map-marker {
-            position: absolute; width: 30px; height: 30px;
-            background-color: #C62828; color: white; border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            font-weight: bold; cursor: pointer; box-shadow: 0 0 10px rgba(198, 40, 40, 0.5);
-            transition: transform 0.3s; z-index: 10;
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: #C62828;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(198, 40, 40, 0.6);
+            transition: transform 0.3s;
+            z-index: 10;
+            border: 2px solid white;
         }
-        .map-marker:hover { transform: scale(1.2); background-color: #b71c1c; }
-        
-        /* CSS Mới cho danh sách */
+
+        .map-marker:hover {
+            transform: scale(1.3);
+            background-color: #b71c1c;
+            z-index: 20;
+        }
+
         .region-item {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 12px; margin-bottom: 8px; border-radius: 6px;
-            border: 1px solid #eee; transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 6px;
+            border-radius: 6px;
+            border: 1px solid #eee;
+            transition: all 0.2s;
+            background: white;
         }
-        /* Style cho mục bấm được */
-        .region-item.active {
-            background-color: white; border-color: #ddd; cursor: pointer;
+
+        .region-item:hover {
+            border-color: #C62828;
+            color: #C62828;
+            transform: translateX(5px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
-        .region-item.active:hover {
-            border-color: #C62828; color: #C62828; padding-left: 16px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+
+        /* Custom scrollbar for list */
+        .region-list-container {
+            max-height: 500px;
+            overflow-y: auto;
         }
-        /* Style cho mục chưa bấm được */
-        .region-item.disabled {
-            background-color: #f9fafb; color: #9ca3af; cursor: not-allowed;
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
         }
     </style>
 </head>
+
 <body class="flex flex-col min-h-screen">
     <div class="paper-texture"></div>
 
     <main class="flex-grow container mx-auto px-6 py-10 pt-28">
         <div class="text-center mb-10">
-            <h1 class="text-4xl font-bold text-cinnabar mb-2">Bản Đồ Văn Hóa & Phương Ngữ</h1>
-            <p class="text-gray-600">Click vào các vùng miền (chấm đỏ) để khám phá các dân tộc đặc trưng.</p>
+            <h1 class="text-4xl font-bold text-cinnabar mb-2 font-[Playfair_Display]">Bản Đồ Văn Hóa & Phương Ngữ</h1>
+            <p class="text-gray-600">Chọn vùng miền để khám phá các dân tộc sinh sống chủ yếu tại đó.</p>
         </div>
 
         <div class="flex flex-col md:flex-row gap-10 items-start max-w-6xl mx-auto">
-            <div class="w-full md:w-2/3 bg-white p-4 rounded-xl shadow-lg border border-gray-200">
-                <div class="map-container relative">
-                    <img src="../images/ban-do-mau.png" alt="Bản đồ Việt Nam" class="w-full h-auto rounded opacity-90" usemap="#vn-map">
-                    
-                    <map name="vn-map">
-                        <area shape="rect" coords="0,0,200,300" href="#" data-region="north" alt="Miền Bắc">
-                        <area shape="rect" coords="0,301,200,600" href="#" data-region="central" alt="Miền Trung">
-                        <area shape="rect" coords="0,601,400,900" href="#" data-region="south" alt="Miền Nam">
-                    </map>
-                    
-                    <div class="map-marker" style="top: 20%; left: 45%;" data-region="north">B</div>
-                    <div class="map-marker" style="top: 50%; left: 55%;" data-region="central">T</div>
-                    <div class="map-marker" style="top: 80%; left: 40%;" data-region="south">N</div>
+            <!-- Cột Trái: Bản Đồ (Dùng ảnh người dùng upload) -->
+            <div class="w-full md:w-1/2 bg-white/50 p-4 rounded-xl shadow-lg border border-gray-200 backdrop-blur-sm">
+                <div
+                    class="map-container relative w-full flex justify-center items-center bg-white rounded-xl overflow-hidden shadow-inner border border-gray-200">
+                    <img src="../images/ban-do-day-du.png" alt="Bản đồ hành chính Việt Nam"
+                        class="w-full h-auto object-contain max-h-[700px]">
+
+                    <!-- Markers positioned relatively over the image -->
+                    <!-- Tinh chỉnh vị trí marker dựa trên ảnh bản đồ mới -->
+
+                    <!-- Miền Bắc -->
+                    <div class="map-marker group" style="top: 20%; left: 45%;" data-region="north">
+                        <span>Bắc</span>
+                        <div
+                            class="absolute -top-10 left-1/2 -translate-x-1/2 w-40 bg-white text-gray-800 text-xs p-2 rounded shadow-lg opacity-0 group-hover:opacity-100 transition pointer-events-none z-20 text-center border border-gray-100">
+                            Đông Bắc & Tây Bắc Bộ
+                        </div>
+                    </div>
+
+                    <!-- Miền Trung -->
+                    <div class="map-marker group" style="top: 45%; left: 60%;" data-region="central">
+                        <span>Trung</span>
+                        <div
+                            class="absolute -top-10 left-1/2 -translate-x-1/2 w-40 bg-white text-gray-800 text-xs p-2 rounded shadow-lg opacity-0 group-hover:opacity-100 transition pointer-events-none z-20 text-center border border-gray-100">
+                            Duyên Hải Miền Trung
+                        </div>
+                    </div>
+
+                    <!-- Tây Nguyên -->
+                    <!-- Vị trí Tây Nguyên lệch về phía tây nam miền trung -->
+                    <div class="map-marker group" style="top: 68%; left: 48%;" data-region="highlands">
+                        <span>TN</span>
+                        <div
+                            class="absolute -top-10 left-1/2 -translate-x-1/2 w-40 bg-white text-gray-800 text-xs p-2 rounded shadow-lg opacity-0 group-hover:opacity-100 transition pointer-events-none z-20 text-center border border-gray-100">
+                            Vùng cao nguyên đất đỏ
+                        </div>
+                    </div>
+
+                    <!-- Miền Nam -->
+                    <div class="map-marker group" style="top: 85%; left: 35%;" data-region="south">
+                        <span>Nam</span>
+                        <div
+                            class="absolute -top-10 left-1/2 -translate-x-1/2 w-40 bg-white text-gray-800 text-xs p-2 rounded shadow-lg opacity-0 group-hover:opacity-100 transition pointer-events-none z-20 text-center border border-gray-100">
+                            Đông Nam Bộ & Tây Nam Bộ
+                        </div>
+                    </div>
                 </div>
-                <p class="text-xs text-center text-gray-400 mt-2 italic">*Click vào các điểm tròn hoặc vùng trên bản đồ</p>
+                <p class="text-xs text-center text-gray-500 mt-4 italic">*Click vào các vị trí đã đánh dấu để xem thông
+                    tin vùng miền</p>
             </div>
 
-            <div class="w-full md:w-1/3">
+            <!-- Cột Phải: Thông Tin & Danh Sách -->
+            <div class="w-full md:w-1/2">
                 <div class="bg-[#FDFBF7] p-6 rounded-xl shadow-lg border-t-4 border-cinnabar sticky top-24">
-                    <h3 id="region-title" class="text-2xl font-bold text-gray-800 mb-3">Chọn một vùng</h3>
-                    <p id="region-desc" class="text-gray-600 mb-6 text-sm">Thông tin về văn hóa và các dân tộc sẽ hiện tại đây.</p>
-                    
-                    <h4 class="font-bold text-cinnabar mb-4 text-sm uppercase tracking-wide border-b border-gray-200 pb-2">Các dân tộc tiêu biểu:</h4>
-                    
-                    <div id="region-list" class="region-list">
-                        <div class="text-gray-400 text-sm italic">Chưa có dữ liệu... Hãy chọn một vùng trên bản đồ.</div>
+                    <h3 id="region-title" class="text-3xl font-bold text-gray-800 mb-2 font-[Playfair_Display]">Chọn
+                        vùng miền</h3>
+                    <p id="region-desc" class="text-gray-600 mb-6 text-sm italic">Thông tin phân bố dân tộc sẽ hiển thị
+                        tại đây.</p>
+
+                    <div id="region-content" class="hidden">
+                        <h4
+                            class="font-bold text-cinnabar mb-4 text-sm uppercase tracking-wide border-b border-gray-200 pb-2">
+                            Các dân tộc tiêu biểu:</h4>
+                        <div id="region-list" class="region-list-container pr-2">
+                            <!-- List render here -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -83,88 +162,85 @@
     <script type="module" src="../js/layout.js"></script>
 
     <script>
-        // Dữ liệu (Thêm thuộc tính active: true/false)
+        function toSlug(name) {
+            return name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/'/g, "").replace(/\s+/g, "-");
+        }
+
         const data = {
             north: {
-                title: "Văn Hóa Bắc Bộ",
-                desc: "Cái nôi của văn hóa Việt với nền văn minh lúa nước sông Hồng.",
-                groups: [
-                    { name: "Kinh (Việt)", url: "../dan_toc/dan-toc-kinh.html", active: true },
-                    { name: "Tày", url: "#", active: false },
-                    { name: "Mường", url: "#", active: false },
-                    { name: "H'Mông", url: "#", active: false }
-                ]
+                title: "Miền Bắc (Đông Bắc & Tây Bắc)",
+                desc: "Vùng núi non hùng vĩ, nơi cư trú của rất nhiều dân tộc thiểu số với trang phục sặc sỡ và lễ hội đặc sắc.",
+                groups: ["Kinh", "Tày", "Thái", "Mường", "Nùng", "H'Mông", "Dao", "Sán Chay", "Sán Dìu", "Khơ Mú", "Giáy", "Lào", "Lự", "Phù Lá", "La Hủ", "Hà Nhì"]
             },
             central: {
-                title: "Văn Hóa Trung Bộ",
-                desc: "Mảnh đất địa linh nhân kiệt, giao thoa văn hóa Champa và Đại Việt.",
-                groups: [
-                    { name: "Kinh (Huế)", url: "../dan_toc/dan-toc-kinh.html", active: true },
-                    { name: "Chăm", url: "#", active: false },
-                    { name: "Cơ Tu", url: "#", active: false }
-                ]
+                title: "Duyên Hải Miền Trung",
+                desc: "Vùng đất giao thoa văn hóa Champa cổ và văn hóa Đại Việt, nổi bật với các tháp Chàm và lễ hội biển.",
+                groups: ["Kinh", "Chăm", "Bru-Vân Kiều", "Co", "Hrê", "Ta Oi", "Chứt"]
+            },
+            highlands: {
+                title: "Tây Nguyên (Đại Ngàn)",
+                desc: "Vùng đất huyền thoại của sử thi Đam San, cồng chiêng và nhà Rông.",
+                groups: ["Gia Rai", "Ê Đê", "Ba Na", "Xơ Đăng", "Cơ Ho", "Mnông", "Giẻ Triêng", "Mạ", "Cơ Tu", "Brâu", "Rơ Măm"]
             },
             south: {
-                title: "Văn Hóa Nam Bộ",
-                desc: "Vùng đất hào sảng, phóng khoáng với văn hóa sông nước.",
-                groups: [
-                    { name: "Kinh (Nam Bộ)", url: "../dan_toc/dan-toc-kinh.html", active: true },
-                    { name: "Khmer", url: "#", active: false },
-                    { name: "Hoa", url: "#", active: false }
-                ]
+                title: "Nam Bộ (Miền Tây & Đông Nam Bộ)",
+                desc: "Vùng sông nước miệt vườn, nơi cộng cư lâu đời của ba dân tộc Kinh - Khmer - Hoa.",
+                groups: ["Kinh", "Khmer", "Hoa", "Chơ Ro", "X'Tiêng", "Mạ"]
             }
         };
 
+        const markers = document.querySelectorAll('.map-marker');
+
         function showRegion(key) {
             const info = data[key];
-            if(!info) return;
+            if (!info) return;
 
+            // Update UI Sidebar
             document.getElementById('region-title').innerText = info.title;
             document.getElementById('region-desc').innerText = info.desc;
-            
-            const list = document.getElementById('region-list');
-            list.innerHTML = ''; // Xóa danh sách cũ
-            
-            info.groups.forEach(g => {
-                // Tạo thẻ DIV thay vì thẻ A để tránh lỗi link
-                const div = document.createElement('div');
-                
-                if(g.active) {
-                    // Nếu active = true -> Bấm được
-                    div.className = "region-item active";
-                    div.innerHTML = `
-                        <span class="font-bold">${g.name}</span>
-                        <span class="text-xs font-bold text-cinnabar">Xem ngay &rarr;</span>
-                    `;
-                    // Gắn sự kiện click chuyển trang bằng JS
-                    div.onclick = function() {
-                        window.location.href = g.url;
-                    };
-                } else {
-                    // Nếu active = false -> Không bấm được
-                    div.className = "region-item disabled";
-                    div.innerHTML = `
-                        <span>${g.name}</span>
-                        <span class="text-xs italic">(Đang cập nhật)</span>
-                    `;
-                }
+            document.getElementById('region-content').classList.remove('hidden');
 
+            const list = document.getElementById('region-list');
+            list.innerHTML = '';
+
+            info.groups.forEach((name, idx) => {
+                const slug = toSlug(name);
+                const div = document.createElement('a');
+                div.href = `../dan_toc/dan-toc-${slug}.html`;
+                div.className = "region-item block cursor-pointer group";
+                div.innerHTML = `
+                    <span class="font-bold text-gray-700 group-hover:text-cinnabar">${name}</span>
+                    <span class="text-xs text-gray-400 group-hover:text-cinnabar">Chi tiết &rarr;</span>
+                `;
+
+                // Animation stagger
+                gsap.fromTo(div, { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.3, delay: idx * 0.05 });
                 list.appendChild(div);
+            });
+
+            // Highlight Marker
+            markers.forEach(m => {
+                if (m.dataset.region === key) {
+                    m.style.backgroundColor = "#b71c1c";
+                    m.style.transform = "scale(1.3)";
+                    m.style.zIndex = "20";
+                    m.style.border = "2px solid #FFD700"; // Gold border for active
+                } else {
+                    m.style.backgroundColor = "#C62828";
+                    m.style.transform = "scale(1)";
+                    m.style.zIndex = "10";
+                    m.style.border = "2px solid white";
+                }
             });
         }
 
-        // Gắn sự kiện click cho Marker
-        document.querySelectorAll('.map-marker').forEach(m => {
-            m.addEventListener('click', () => showRegion(m.dataset.region));
-        });
+        // Auto select North first
+        showRegion('north');
 
-        // Gắn sự kiện click cho Area Map
-        document.querySelectorAll('area').forEach(a => {
-            a.addEventListener('click', (e) => {
-                e.preventDefault();
-                showRegion(a.dataset.region);
-            });
+        markers.forEach(m => {
+            m.addEventListener('click', () => showRegion(m.dataset.region));
         });
     </script>
 </body>
+
 </html>

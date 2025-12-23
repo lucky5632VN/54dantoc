@@ -1,1 +1,1 @@
-export const API_KEY = "KEY_AO_CHO_GITHUB";
+export const API_KEY = "AIzaSyAFEc8G7_aYfE7f291UAEuSho0WZTkxzhU";

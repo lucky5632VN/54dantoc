@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,17 +15,40 @@
             color: white;
             border-color: #C62828;
         }
+
         /* Hiệu ứng ảnh bài viết */
-        .blog-card img { transition: transform 0.5s ease; }
-        .blog-card:hover img { transform: scale(1.1); }
+        .blog-card img {
+            transition: transform 0.7s ease;
+        }
+
+        .blog-card:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Text clamp */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
     </style>
 </head>
+
 <body class="flex flex-col min-h-screen font-[Playfair_Display]">
 
     <div class="paper-texture"></div>
 
     <main class="flex-grow container mx-auto px-6 py-10 pt-28 max-w-6xl">
-        
+
+        <!-- HEADER -->
         <div class="text-center mb-12 gs-reveal">
             <h1 class="text-4xl md:text-6xl font-bold text-cinnabar mb-4">Góc Nhìn Văn Hóa</h1>
             <p class="text-gray-600 italic max-w-2xl mx-auto">
@@ -32,143 +56,216 @@
             </p>
         </div>
 
-        <div class="flex flex-wrap justify-center gap-4 mb-12 gs-reveal">
-            <button onclick="filterPosts('all')" class="filter-btn active px-6 py-2 border border-gray-400 rounded-full hover:border-cinnabar hover:text-cinnabar transition duration-300">Tất Cả</button>
-            <button onclick="filterPosts('am-thuc')" class="filter-btn px-6 py-2 border border-gray-400 rounded-full hover:border-cinnabar hover:text-cinnabar transition duration-300">🍜 Ẩm Thực</button>
-            <button onclick="filterPosts('trang-phuc')" class="filter-btn px-6 py-2 border border-gray-400 rounded-full hover:border-cinnabar hover:text-cinnabar transition duration-300">👘 Trang Phục</button>
-            <button onclick="filterPosts('phong-tuc')" class="filter-btn px-6 py-2 border border-gray-400 rounded-full hover:border-cinnabar hover:text-cinnabar transition duration-300">🏮 Phong Tục</button>
-            <button onclick="filterPosts('lang-nghe')" class="filter-btn px-6 py-2 border border-gray-400 rounded-full hover:border-cinnabar hover:text-cinnabar transition duration-300">🏺 Làng Nghề</button>
+        <!-- FEATURED POST (TIÊU ĐIỂM) -->
+        <div class="mb-16 gs-reveal">
+            <h2 class="text-2xl font-bold text-gray-800 uppercase tracking-widest mb-6 border-l-4 border-cinnabar pl-4">
+                🔥 Tiêu Điểm Tuần Này</h2>
+            <div
+                class="group relative w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl cursor-pointer">
+                <img src="../images/thai/logo-dan-toc.jpg" alt="Múa Xòe Thái"
+                    class="absolute inset-0 w-full h-full object-cover transition duration-1000 group-hover:scale-105">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90"></div>
+                <div class="absolute bottom-0 left-0 p-8 md:p-12 text-white max-w-3xl">
+                    <span
+                        class="bg-yellow-600 text-white px-3 py-1 rounded text-xs font-bold uppercase tracking-wider mb-2 inline-block">Di
+                        Sản Phi Vật Thể</span>
+                    <h3
+                        class="text-3xl md:text-5xl font-bold mb-4 leading-tight group-hover:text-yellow-400 transition">
+                        Nghệ Thuật Xòe Thái: Vũ Điệu Kết Đoàn</h3>
+                    <p class="text-gray-200 text-lg line-clamp-2 mb-6 text-justify">
+                        Không chỉ là những điệu múa uyển chuyển, Xòe Thái còn là biểu tượng của tình đoàn kết, lòng mến
+                        khách và quan niệm nhân sinh cao đẹp của người Thái Tây Bắc.
+                    </p>
+                    <a href="../dan_toc/dan-toc-thai.html"
+                        class="inline-block bg-cinnabar hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full transition transform hover:-translate-y-1 shadow-lg">
+                        Khám Phá Ngay &rarr;
+                    </a>
+                </div>
+            </div>
         </div>
 
-        <div id="blog-grid" class="grid md:grid-cols-3 gap-8">
-            </div>
+        <!-- FILTER BUTTONS -->
+        <div
+            class="flex flex-wrap justify-center gap-4 mb-12 gs-reveal sticky top-20 z-30 bg-[#fdfbf7]/90 p-4 rounded-full backdrop-blur-sm shadow-sm border border-gray-200/50">
+            <button onclick="filterPosts('all')"
+                class="filter-btn active px-6 py-2 border border-gray-400 rounded-full hover:border-cinnabar hover:text-cinnabar transition duration-300 text-sm font-bold uppercase">Tất
+                Cả</button>
+            <button onclick="filterPosts('van-hoa')"
+                class="filter-btn px-6 py-2 border border-gray-400 rounded-full hover:border-cinnabar hover:text-cinnabar transition duration-300 text-sm font-bold uppercase">🎭
+                Văn Hóa & Lễ Hội</button>
+            <button onclick="filterPosts('am-thuc')"
+                class="filter-btn px-6 py-2 border border-gray-400 rounded-full hover:border-cinnabar hover:text-cinnabar transition duration-300 text-sm font-bold uppercase">🍜
+                Ẩm Thực</button>
+            <button onclick="filterPosts('trang-phuc')"
+                class="filter-btn px-6 py-2 border border-gray-400 rounded-full hover:border-cinnabar hover:text-cinnabar transition duration-300 text-sm font-bold uppercase">👘
+                Trang Phục</button>
+            <button onclick="filterPosts('lang-nghe')"
+                class="filter-btn px-6 py-2 border border-gray-400 rounded-full hover:border-cinnabar hover:text-cinnabar transition duration-300 text-sm font-bold uppercase">🏺
+                Làng Nghề</button>
+        </div>
+
+        <!-- BLOG GRID -->
+        <div id="blog-grid" class="grid md:grid-cols-3 gap-8 pb-20">
+            <!-- Content will be injected by JS -->
+        </div>
 
     </main>
 
     <script type="module" src="../js/layout.js"></script>
 
     <script>
-        // --- CƠ SỞ DỮ LIỆU BÀI VIẾT (DATABASE MINI) ---
-        // Bạn chỉ cần thêm bài viết mới vào đây là xong!
+        // --- CƠ SỞ DỮ LIỆU BÀI VIẾT ĐA DẠNG ---
         const blogPosts = [
             {
                 id: 1,
-                category: "am-thuc",
-                title: "Sự Tích Bánh Chưng: Triết Lý Vuông Tròn",
-                desc: "Không chỉ là món ăn, Bánh Chưng còn là vũ trụ quan của người Việt cổ về Trời tròn Đất vuông.",
-                image: "../images/kinh/banh-chung.jpg",
-                date: "20/11/2025"
+                category: "van-hoa",
+                title: "Lễ Cấp Sắc: Dấu Ấn Trưởng Thành Người Dao",
+                desc: "Nghi lễ quan trọng bậc nhất trong đời người đàn ông Dao, đánh dấu sự công nhận của cộng đồng và thần linh.",
+                image: "../images/dao/logo-dan-toc.jpg",
+                date: "23/12/2025"
             },
             {
                 id: 2,
-                category: "trang-phuc",
-                title: "Áo Ngũ Thân & Đạo Làm Người",
-                desc: "Năm thân áo tượng trưng cho tứ thân phụ mẫu và bản thân người mặc. Một vẻ đẹp khiêm cung.",
-                image: "../images/kinh/ao-ngu-than.jpg",
-                date: "18/11/2025"
+                category: "van-hoa",
+                title: "Không Gian Văn Hóa Cồng Chiêng Tây Nguyên",
+                desc: "Tiếng cồng chiêng không chỉ là âm nhạc, mà là tiếng nói của tâm linh, kết nối con người với thần linh và thiên nhiên.",
+                image: "../images/gia-rai/logo-dan-toc.jpg",
+                date: "22/12/2025"
             },
             {
                 id: 3,
-                category: "phong-tuc",
-                title: "Miếng Trầu Là Đầu Câu Chuyện",
-                desc: "Tại sao trong mọi lễ cưới hỏi, đám giỗ, hay gặp gỡ ngày xưa đều không thể thiếu cơi trầu?",
-                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Betel_chewing_supplies_Vietnam.jpg/640px-Betel_chewing_supplies_Vietnam.jpg",
-                date: "15/11/2025"
+                category: "trang-phuc",
+                title: "Sắc Chàm Của Người Tày",
+                desc: "Vẻ đẹp mộc mạc, bền bỉ của trang phục vải chàm thủ công - biểu tượng của sự cần cù và thủy chung.",
+                image: "../images/tay/logo-dan-toc.jpg",
+                date: "20/12/2025"
             },
             {
                 id: 4,
                 category: "am-thuc",
-                title: "Phở - Từ Gánh Hàng Rong Đến Di Sản",
-                desc: "Hành trình trăm năm của bát phở Việt, từ món quà sáng dân dã đến tinh hoa ẩm thực thế giới.",
-                image: "../images/kinh/pho.jpg",
-                date: "10/11/2025"
+                title: "Cơm Lam & Gà Nướng: Hương Vị Đại Ngàn",
+                desc: "Sự kết hợp hoàn hảo giữa lúa nương dẻo thơm nướng trong ống tre và gà chạy bộ đậm đà gia vị núi rừng.",
+                image: "../images/ba-na/logo-dan-toc.jpg",
+                date: "18/12/2025"
             },
             {
                 id: 5,
-                category: "lang-nghe",
-                title: "Gốm Bát Tràng: Hồn Đất Hóa Vàng",
-                desc: "Làng nghề gốm sứ ven sông Hồng với tuổi đời hơn 500 năm lịch sử thăng trầm.",
-                image: "https://cdn.vjshop.vn/hightech/may-anh/top-10-lang-nghe-truyen-thong-o-viet-nam/lang-gom-bat-trang.jpg",
-                date: "05/11/2025"
+                category: "van-hoa",
+                title: "Tháp Chàm & Bí Ẩn Kỹ Thuật Xây Dựng",
+                desc: "Những ngôi tháp gạch ngàn năm tuổi đứng vững trước thời gian, thách thức mọi giải mã về chất kết dính.",
+                image: "../images/cham/logo-dan-toc.jpg",
+                date: "15/12/2025"
             },
             {
                 id: 6,
-                category: "phong-tuc",
-                title: "Tín Ngưỡng Thờ Mẫu Tam Phủ",
-                desc: "Tìm hiểu về Đạo Mẫu - di sản văn hóa phi vật thể đại diện của nhân loại.",
-                image: "../images/kinh/tin-nguong.jpg",
+                category: "am-thuc",
+                title: "Sự Tích Bánh Chưng: Triết Lý Vuông Tròn",
+                desc: "Không chỉ là món ăn, Bánh Chưng còn là vũ trụ quan của người Việt cổ về Trời tròn Đất vuông.",
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Banh_chung_tet_2005.jpg/800px-Banh_chung_tet_2005.jpg",
+                date: "20/11/2025"
+            },
+            {
+                id: 7,
+                category: "trang-phuc",
+                title: "Váy Hoa Sặc Sỡ Của Người Mông",
+                desc: "Bộ trang phục như một vườn hoa di động, thể hiện kỹ thuật thêu thùa và ghép vải đỉnh cao.",
+                image: "../images/hmong/logo-dan-toc.jpg",
+                date: "10/11/2025"
+            },
+            {
+                id: 8,
+                category: "van-hoa",
+                title: "Nhà Rông: Trái Tim Của Buôn Làng",
+                desc: "Nơi hội tụ khí thiêng của đất trời, nơi diễn ra các sự kiện trọng đại của cộng đồng các dân tộc Tây Nguyên.",
+                image: "../images/xo-dang/logo-dan-toc.jpg",
+                date: "05/11/2025"
+            },
+            {
+                id: 9,
+                category: "lang-nghe",
+                title: "Dệt Thổ Cẩm: Sợi Nhớ Sợi Thương",
+                desc: "Nghề dệt truyền thống không chỉ tạo ra vật dụng mà còn dệt nên tâm tư, tình cảm của người phụ nữ.",
+                image: "../images/e-de/logo-dan-toc.jpg", // Corrected e-de path
                 date: "01/11/2025"
             }
         ];
 
-        // --- HÀM HIỂN THỊ BÀI VIẾT ---
+        // --- HÀM HIỂN THỊ BÀI VIẾT (Fixed) ---
         function renderPosts(data) {
             const grid = document.getElementById('blog-grid');
-            grid.innerHTML = ''; // Xóa nội dung cũ
 
-            // Hiệu ứng mờ dần khi chuyển tab
-            gsap.to(grid, { opacity: 0, duration: 0.2, onComplete: () => {
-                
-                if(data.length === 0) {
-                    grid.innerHTML = `<div class="col-span-3 text-center text-gray-500 italic">Chưa có bài viết nào cho mục này.</div>`;
-                } else {
-                    data.forEach(post => {
-                        const html = `
-                            <article class="blog-card bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition duration-300 flex flex-col border border-gray-100 cursor-pointer group">
-                                <div class="h-56 overflow-hidden relative">
-                                    <img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                                    <div class="absolute top-4 left-4 bg-cinnabar text-white text-xs px-3 py-1 rounded-full font-bold uppercase shadow-md">
-                                        ${getCategoryName(post.category)}
-                                    </div>
-                                </div>
-                                <div class="p-6 flex-1 flex flex-col">
-                                    <div class="text-xs text-gray-400 mb-2 flex items-center gap-2">
-                                        <span>📅 ${post.date}</span>
-                                    </div>
-                                    <h3 class="text-xl font-bold text-gray-800 mb-3 group-hover:text-cinnabar transition line-clamp-2 font-[Playfair_Display]">
-                                        ${post.title}
-                                    </h3>
-                                    <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow text-justify leading-relaxed">
-                                        ${post.desc}
-                                    </p>
-                                    <div class="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center">
-                                        <span class="text-cinnabar font-bold text-sm group-hover:underline">Đọc tiếp &rarr;</span>
-                                        <span class="text-xs text-gray-400">Admin</span>
-                                    </div>
-                                </div>
-                            </article>
-                        `;
-                        grid.innerHTML += html;
-                    });
-                }
+            // 1. Clear content first
+            grid.innerHTML = '';
 
-                // Hiện lại với hiệu ứng
-                gsap.to(grid, { opacity: 1, duration: 0.4 });
-                
-                // Hiệu ứng xuất hiện từng cái
-                gsap.from(".blog-card", { y: 30, opacity: 0, duration: 0.5, stagger: 0.1 });
-            }});
+            // 2. Check data
+            if (data.length === 0) {
+                grid.innerHTML = `<div class="col-span-3 text-center text-gray-500 italic py-10">Chưa có bài viết nào cho mục này.</div>`;
+                return;
+            }
+
+            // 3. Render HTML - Normal visibility checking
+            data.forEach((post, index) => {
+                const html = `
+                    <article class="blog-card flex flex-col bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 border border-gray-100 cursor-pointer group h-full">
+                        <div class="h-56 overflow-hidden relative">
+                            <img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover">
+                            <div class="absolute top-4 left-4 bg-gradient-to-r from-cinnabar to-red-600 text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase shadow-md tracking-wider">
+                                ${getCategoryName(post.category)}
+                            </div>
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <div class="text-xs text-gray-400 mb-3 flex items-center gap-2 font-sans">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                <span>${post.date}</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3 group-hover:text-cinnabar transition line-clamp-2 leading-tight">
+                                ${post.title}
+                            </h3>
+                            <p class="text-gray-600 text-sm mb-4 line-clamp-3 text-justify leading-relaxed">
+                                ${post.desc}
+                            </p>
+                            <div class="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center">
+                                <span class="text-cinnabar font-bold text-sm flex items-center gap-1 group-hover:translate-x-1 transition">
+                                    Đọc tiếp <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+                `;
+                grid.innerHTML += html;
+            });
+
+            // 4. Trigger Animation
+            // Use gsap.from: Animate FROM these values TO natural state
+            gsap.from(".blog-card", {
+                y: 50,
+                opacity: 0,
+                duration: 0.6,
+                stagger: 0.1,
+                ease: "power2.out",
+                clearProps: "all" // Safe to use now because natural state is visible
+            });
         }
 
-        // Hàm lấy tên danh mục tiếng Việt
         function getCategoryName(slug) {
             const names = {
+                'van-hoa': 'Văn Hóa',
                 'am-thuc': 'Ẩm Thực',
                 'trang-phuc': 'Trang Phục',
                 'phong-tuc': 'Phong Tục',
-                'lang-nghe': 'Làng Nghề'
+                'lang-nghe': 'Làng Nghề',
+                'all': 'Tất Cả'
             };
             return names[slug] || 'Khác';
         }
 
-        // --- HÀM LỌC BÀI VIẾT ---
-        window.filterPosts = function(category) {
-            // 1. Xử lý nút Active
+        window.filterPosts = function (category) {
+            // Update UI Buttons
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active', 'bg-cinnabar', 'text-white', 'border-cinnabar'));
-            // Tìm nút vừa bấm để active (dùng event.target hoặc logic đơn giản)
             event.target.classList.add('active', 'bg-cinnabar', 'text-white', 'border-cinnabar');
 
-            // 2. Lọc dữ liệu
+            // Filter Logic
+            // Simple approach: Re-render without complex grid transitions for stability
             if (category === 'all') {
                 renderPosts(blogPosts);
             } else {
@@ -177,12 +274,13 @@
             }
         }
 
-        // Khởi chạy lần đầu (Hiện tất cả)
+        // Init
         renderPosts(blogPosts);
 
-        // Hiệu ứng xuất hiện tiêu đề
-        gsap.from(".gs-reveal", { opacity: 0, y: 30, duration: 1, stagger: 0.2 });
+        // Header animation
+        gsap.from(".gs-reveal", { opacity: 0, y: 30, duration: 1, stagger: 0.2, ease: "power2.out" });
 
     </script>
 </body>
+
 </html>

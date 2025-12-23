@@ -1,88 +1,140 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
     <title>Bảo Tàng Số 3D - Bản Sắc Việt</title>
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link rel="stylesheet" href="../css/style.css">
-    
+
     <style>
-        body { background-color: #0f0f0f !important; color: #e0e0e0 !important; overflow: hidden; /* Khóa cuộn trang để 3D full màn */ }
-        
+        body {
+            background-color: #0f0f0f !important;
+            color: #e0e0e0 !important;
+            overflow: hidden;
+            /* Khóa cuộn trang để 3D full màn */
+        }
+
         /* Danh sách bên phải */
         .artifact-item {
             transition: all 0.2s ease;
             border-right: 3px solid transparent;
             padding: 15px;
         }
-        .artifact-item:hover { background-color: #222; }
+
+        .artifact-item:hover {
+            background-color: #222;
+        }
+
         .artifact-item.active {
             background-color: #1a1a1a;
             border-right-color: #DAA520;
             color: #DAA520;
         }
-        .artifact-item img { opacity: 0.6; transition: opacity 0.3s; width: 60px; height: 60px; }
-        .artifact-item.active img { opacity: 1; border: 2px solid #DAA520; }
+
+        .artifact-item img {
+            opacity: 0.6;
+            transition: opacity 0.3s;
+            width: 60px;
+            height: 60px;
+        }
+
+        .artifact-item.active img {
+            opacity: 1;
+            border: 2px solid #DAA520;
+        }
 
         /* Ánh sáng tập trung */
         .museum-light {
-            background: radial-gradient(circle at center, rgba(255,255,255,0.08) 0%, #000 90%);
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08) 0%, #000 90%);
         }
-        
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        ::-webkit-scrollbar-track { background: #111; }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
     </style>
 </head>
+
 <body class="flex flex-col h-screen font-[Playfair_Display]">
 
     <main class="flex-grow w-full h-full pt-20 flex flex-col">
-        
+
         <div class="flex-grow flex flex-col lg:flex-row overflow-hidden border-t border-[#333] gs-reveal">
-            
-            <div class="w-full lg:w-4/5 relative flex flex-col border-r border-[#333]">
-                
+
+            <!-- 3D Viewer Area: Mobile 60%, Desktop 80% width -->
+            <div class="w-full lg:w-4/5 h-[60vh] lg:h-auto relative flex flex-col border-r border-[#333]">
+
                 <div class="flex-grow relative museum-light overflow-hidden group" id="viewer-container">
-                    
-                    <iframe id="main-iframe" class="w-full h-[calc(100%+60px)] -mt-[60px]" 
-                        frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" 
+
+                    <iframe id="main-iframe" class="w-full h-[calc(100%+60px)] -mt-[60px]" frameborder="0"
+                        allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true"
                         allow="autoplay; fullscreen; xr-spatial-tracking" src="">
                     </iframe>
-                    
-                    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 pointer-events-none opacity-60 group-hover:opacity-0 transition-opacity duration-500">
-                        <span class="bg-black/70 text-white px-6 py-2 rounded-full text-sm backdrop-blur-md border border-white/10 tracking-wider">
-                           🖱️ Xoay - Di chuyển - Phóng to
+
+                    <div
+                        class="absolute bottom-8 left-1/2 transform -translate-x-1/2 pointer-events-none opacity-60 group-hover:opacity-0 transition-opacity duration-500">
+                        <span
+                            class="bg-black/70 text-white px-6 py-2 rounded-full text-sm backdrop-blur-md border border-white/10 tracking-wider whitespace-nowrap">
+                            🖱️ Xoay - Di chuyển
                         </span>
                     </div>
                 </div>
 
-                <div class="absolute top-6 left-6 max-w-md pointer-events-none">
-                    <h1 class="text-4xl md:text-5xl font-bold text-white drop-shadow-lg mb-2" id="info-title">Tên Vật Phẩm</h1>
+                <div class="absolute top-6 left-6 max-w-xs md:max-w-md pointer-events-none">
+                    <h1 class="text-2xl md:text-5xl font-bold text-white drop-shadow-lg mb-2" id="info-title">Tên Vật
+                        Phẩm</h1>
                     <div class="w-20 h-1 bg-[#DAA520] mb-3 shadow-lg"></div>
-                    <p id="info-desc" class="text-gray-300 text-sm bg-black/60 p-4 rounded-lg backdrop-blur-md border-l-2 border-[#DAA520] shadow-xl line-clamp-3">
+                    <p id="info-desc"
+                        class="text-gray-300 text-xs md:text-sm bg-black/60 p-4 rounded-lg backdrop-blur-md border-l-2 border-[#DAA520] shadow-xl line-clamp-3 hidden md:block">
                         Mô tả ngắn...
                     </p>
                 </div>
-                
-                <div class="absolute top-6 right-6 pointer-events-auto">
-                    <button onclick="showFullInfo()" class="bg-[#DAA520] text-black px-4 py-2 rounded font-bold hover:bg-white transition shadow-lg">
-                        📖 Chi tiết
+
+                <div class="absolute top-6 right-6 pointer-events-auto flex flex-col md:flex-row gap-2">
+                    <button id="auto-tour-btn" onclick="toggleAutoTour()"
+                        class="bg-[#222] text-white border border-[#DAA520] px-3 py-1.5 md:px-4 md:py-2 rounded font-bold hover:bg-[#DAA520] hover:text-black transition shadow-lg flex items-center justify-center gap-2 text-xs md:text-base">
+                        <span>▶️</span> Tour
+                    </button>
+                    <button onclick="toggleMusic()"
+                        class="bg-[#222] text-white border border-[#DAA520] px-3 py-1.5 md:px-4 md:py-2 rounded font-bold hover:bg-[#DAA520] hover:text-black transition shadow-lg text-xs md:text-base">
+                        <span id="music-icon">🔇</span>
+                    </button>
+                    <button onclick="showFullInfo()"
+                        class="bg-[#DAA520] text-black px-3 py-1.5 md:px-4 md:py-2 rounded font-bold hover:bg-white transition shadow-lg text-xs md:text-base">
+                        📖 <span class="hidden md:inline">Chi tiết</span>
                     </button>
                 </div>
+
+                <!-- Fanpage Audio Placeholder -->
+                <audio id="bg-music" loop>
+                    <source src="https://docs.google.com/uc?export=download&id=1tWj2LbdM6qJWBqNw7Fz0Kx9_QO-JzX3g"
+                        type="audio/mp3">
+                </audio>
             </div>
 
-            <div class="w-full lg:w-1/5 bg-[#161616] flex flex-col shadow-2xl z-10">
-                <div class="p-5 border-b border-[#333] bg-[#111]">
+            <!-- List Area: Mobile 40%, Desktop 20% width -->
+            <div
+                class="w-full lg:w-1/5 h-auto flex-1 lg:flex-auto bg-[#161616] flex flex-col shadow-2xl z-10 transition-all">
+                <div class="p-3 md:p-5 border-b border-[#333] bg-[#111]">
                     <h3 class="text-[#DAA520] font-bold text-xs uppercase tracking-[0.2em] text-center">Bộ Sưu Tập</h3>
                 </div>
                 <div class="overflow-y-auto flex-grow" id="artifact-list">
-                    </div>
-                
-                <div class="p-3 text-center text-xs text-gray-600 border-t border-[#333] bg-[#0f0f0f]">
+                </div>
+
+                <div class="p-3 text-center text-[10px] md:text-xs text-gray-600 border-t border-[#333] bg-[#0f0f0f]">
                     Bảo tàng số 3D Việt Nam
                 </div>
             </div>
@@ -99,14 +151,14 @@
             // 1. BIỂU TƯỢNG QUỐC GIA
             {
                 id: "dong-son-drum",
-                sketchfabId: "7e38e31e0ac64f43a2035aecfc32f6b2", 
+                sketchfabId: "7e38e31e0ac64f43a2035aecfc32f6b2",
                 title: "Trống Đồng Đông Sơn",
                 desc: "Bảo vật quốc gia, kết tinh của nền văn minh sông Hồng rực rỡ. Mặt trống là hình ảnh mặt trời và đời sống người Việt cổ.",
                 thumb: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Dong_Son_bronze_drum_02.jpg/800px-Dong_Son_bronze_drum_02.jpg"
             },
             {
                 id: "chua-mot-cot",
-                sketchfabId: "9b2562f8884141c0b1777e1a1c05887c", 
+                sketchfabId: "9b2562f8884141c0b1777e1a1c05887c",
                 title: "Chùa Một Cột",
                 desc: "Biểu tượng của thủ đô Hà Nội và Phật giáo Việt Nam. Kiến trúc 'liên hoa đài' độc đáo tựa đóa sen nghìn năm.",
                 thumb: "https://images.unsplash.com/photo-1599707367072-cd6ad66cc5a1?q=80&w=600&auto=format&fit=crop"
@@ -129,7 +181,7 @@
             },
             {
                 id: "non-la",
-                sketchfabId: "08338678a712414fbdbf392e6d8ce53e", 
+                sketchfabId: "08338678a712414fbdbf392e6d8ce53e",
                 title: "Nón Lá",
                 desc: "Vẻ đẹp dung dị, che mưa che nắng, gắn liền với hình ảnh người mẹ, người chị trên cánh đồng lúa.",
                 thumb: "https://images.unsplash.com/photo-1528125757672-2d72d1d52374?q=80&w=600&auto=format&fit=crop"
@@ -145,21 +197,21 @@
             // 3. GỐM SỨ & MỸ THUẬT
             {
                 id: "lu-huong",
-                sketchfabId: "23752736700448379342628323236993", 
+                sketchfabId: "23752736700448379342628323236993",
                 title: "Lư Hương Rồng",
                 desc: "Vật phẩm thờ cúng linh thiêng, chạm khắc hình rồng tinh xảo, thể hiện lòng thành kính với tổ tiên.",
                 thumb: "https://img.freepik.com/premium-photo/antique-incense-burner-isolated-black-background_145646-89.jpg"
             },
             {
                 id: "gom-su",
-                sketchfabId: "62350d90285b49c9a3745266d0520664", 
+                sketchfabId: "62350d90285b49c9a3745266d0520664",
                 title: "Bình Gốm Hoa Lam",
                 desc: "Tinh hoa gốm sứ Bát Tràng/Chu Đậu với nước men lam đặc trưng và họa tiết sơn thủy hữu tình.",
                 thumb: "https://gomsubattrang.vn/uploads/news/2019_05/binh-hut-loc-gom-bat-trang-men-ran-co-boc-dong-cao-cap.jpg"
             },
             {
                 id: "tranh-dong-ho",
-                sketchfabId: "e7b1b076f44849f68d5fc814149e71d8", 
+                sketchfabId: "e7b1b076f44849f68d5fc814149e71d8",
                 title: "Tranh Đông Hồ (Đám Cưới Chuột)",
                 desc: "Dòng tranh dân gian khắc gỗ nổi tiếng của Bắc Ninh, mang đậm hơi thở cuộc sống bình dị và hóm hỉnh.",
                 thumb: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Dam_cuoi_chuot.jpg/640px-Dam_cuoi_chuot.jpg"
@@ -186,12 +238,12 @@
 
         function initMuseum() {
             const listContainer = document.getElementById('artifact-list');
-            
+
             artifacts.forEach((item, index) => {
                 const div = document.createElement('div');
                 div.className = `artifact-item flex items-center gap-4 cursor-pointer border-b border-[#222] ${index === 0 ? 'active' : ''}`;
                 div.onclick = () => loadArtifact(index);
-                
+
                 div.innerHTML = `
                     <img src="${item.thumb}" class="rounded bg-black object-cover border border-gray-700 shadow-sm" alt="${item.title}">
                     <div>
@@ -206,6 +258,7 @@
         }
 
         function loadArtifact(index) {
+            // stopSpeaking(); // Removed
             currentIndex = index;
             const item = artifacts[index];
 
@@ -216,12 +269,14 @@
             // Hiệu ứng chuyển đổi chữ
             const titleEl = document.getElementById('info-title');
             const descEl = document.getElementById('info-desc');
-            
-            gsap.to([titleEl, descEl], { opacity: 0, duration: 0.2, onComplete: () => {
-                titleEl.innerText = item.title;
-                descEl.innerText = item.desc;
-                gsap.to([titleEl, descEl], { opacity: 1, duration: 0.3 });
-            }});
+
+            gsap.to([titleEl, descEl], {
+                opacity: 0, duration: 0.2, onComplete: () => {
+                    titleEl.innerText = item.title;
+                    descEl.innerText = item.desc;
+                    gsap.to([titleEl, descEl], { opacity: 1, duration: 0.3 });
+                }
+            });
 
             // Load 3D
             const iframe = document.getElementById('main-iframe');
@@ -229,8 +284,66 @@
             iframe.src = `https://sketchfab.com/models/${item.sketchfabId}/embed?autostart=1&ui_infos=0&ui_watermark=0&ui_controls=1&transparent=1&ui_theme=dark`;
         }
 
+        // --- TEXT TO SPEECH (THUYẾT MINH) - ĐÃ LOẠI BỎ THEO YÊU CẦU ---
+
         function showFullInfo() {
-            alert(artifacts[currentIndex].desc);
+            // Hiển thị modal thay vì alert
+            const item = artifacts[currentIndex];
+            const modal = document.createElement('div');
+            modal.className = "fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-fade-in";
+            modal.innerHTML = `
+                <div class="bg-[#1a1a1a] border border-[#DAA520] p-8 rounded-xl max-w-2xl w-full relative shadow-2xl">
+                    <button onclick="this.closest('.fixed').remove()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl">&times;</button>
+                    <h2 class="text-3xl font-bold text-[#DAA520] mb-4 border-b border-gray-700 pb-2">${item.title}</h2>
+                    <div class="flex gap-6 flex-col md:flex-row">
+                        <img src="${item.thumb}" class="w-32 h-32 object-cover rounded border border-gray-600">
+                        <p class="text-gray-300 leading-relaxed text-justify flex-1">${item.desc} </p>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // --- MUSIC CONTROL ---
+        const bgMusic = document.getElementById('bg-music');
+        let isMusicPlaying = false;
+
+        function toggleMusic() {
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                document.getElementById('music-icon').innerText = '🔇';
+            } else {
+                bgMusic.play().catch(e => alert("Vui lòng click tương tác với trang trước khi phát nhạc!"));
+                document.getElementById('music-icon').innerText = '🔊';
+            }
+            isMusicPlaying = !isMusicPlaying;
+        }
+
+        // --- AUTO TOUR CONTROL ---
+        let autoTourInterval = null;
+
+        function toggleAutoTour() {
+            const btn = document.getElementById('auto-tour-btn');
+
+            if (autoTourInterval) {
+                // Tắt Tour
+                clearInterval(autoTourInterval);
+                autoTourInterval = null;
+                btn.innerHTML = '<span>▶️</span> Tour';
+                btn.classList.remove('bg-[#DAA520]', 'text-black');
+                btn.classList.add('bg-[#222]', 'text-white');
+            } else {
+                // Bật Tour
+                loadArtifact((currentIndex + 1) % artifacts.length); // Chuyển luôn cái tiếp theo
+                autoTourInterval = setInterval(() => {
+                    let nextIndex = (currentIndex + 1) % artifacts.length;
+                    loadArtifact(nextIndex);
+                }, 10000); // 10 giây đổi 1 lần
+
+                btn.innerHTML = '<span>⏸</span> Dừng';
+                btn.classList.add('bg-[#DAA520]', 'text-black');
+                btn.classList.remove('bg-[#222]', 'text-white');
+            }
         }
 
         initMuseum();
@@ -238,4 +351,5 @@
 
     </script>
 </body>
+
 </html>
