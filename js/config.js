@@ -1,1 +1,1 @@
-export const API_KEY = "AIzaSyAFEc8G7_aYfE7f291UAEuSho0WZTkxzhU";
+export const API_KEY = process.env.NEXT_PUBLIC_API_KEY || process.env.API_KEY;
