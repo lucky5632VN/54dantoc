@@ -163,7 +163,7 @@
 
     <script>
         function toSlug(name) {
-            return name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/'/g, "").replace(/\s+/g, "-");
+            return name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D").replace(/'/g, "").replace(/\s+/g, "-");
         }
 
         const data = {
