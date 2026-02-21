@@ -1,0 +1,8 @@
+127.0.0.1 - - [21/Feb/2026 14:57:58] "GET /dan_toc/dan-toc-ba-na.html HTTP/1.1" 200 -
+127.0.0.1 - - [21/Feb/2026 14:57:58] "GET /css/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [21/Feb/2026 14:57:58] "GET /js/layout.js HTTP/1.1" 200 -
+127.0.0.1 - - [21/Feb/2026 14:57:58] "GET /images/ba-na/logo-dan-toc.jpg HTTP/1.1" 200 -
+127.0.0.1 - - [21/Feb/2026 14:57:59] "GET /js/chat.js HTTP/1.1" 200 -
+127.0.0.1 - - [21/Feb/2026 14:57:59] "GET /js/config.js HTTP/1.1" 200 -
+127.0.0.1 - - [21/Feb/2026 14:58:00] code 404, message File not found
+127.0.0.1 - - [21/Feb/2026 14:58:00] "GET /images/pattern.png HTTP/1.1" 404 -

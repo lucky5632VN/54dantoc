@@ -3,18 +3,19 @@ const path = require('path');
 
 // Danh sách 54 dân tộc
 const ethnicGroups = [
-    "Kinh", "Tày", "Thái", "Mường", "Khmer", "Hoa", "Nùng", "H'Mông", "Dao", "Gia Rai", 
-    "Ê Đê", "Ba Na", "Xơ Đăng", "Sán Chay", "Cơ Ho", "Chăm", "Sán Dìu", "Hrê", "Ra Glai", 
-    "Mnông", "X'Tiêng", "Bru-Vân Kiều", "Khơ Mú", "Cơ Tu", "Giáy", "Giẻ Triêng", "Mạ", "Kháng", 
-    "Co", "Tà Ôi", "Chơ Ro", "Xinh Mun", "Hà Nhì", "Chu Ru", "Lào", "La Chí", "La Ha", "Phù Lá", 
-    "La Hủ", "Lự", "Lô Lô", "Chứt", "Mảng", "Pà Thẻn", "Cờ Lao", "Cống", "Bố Y", "Si La", 
+    "Kinh", "Tày", "Thái", "Mường", "Khmer", "Hoa", "Nùng", "H'Mông", "Dao", "Gia Rai",
+    "Ê Đê", "Ba Na", "Xơ Đăng", "Sán Chay", "Cơ Ho", "Chăm", "Sán Dìu", "Hrê", "Ra Glai",
+    "Mnông", "X'Tiêng", "Bru-Vân Kiều", "Khơ Mú", "Cơ Tu", "Giáy", "Giẻ Triêng", "Mạ", "Kháng",
+    "Co", "Tà Ôi", "Chơ Ro", "Xinh Mun", "Hà Nhì", "Chu Ru", "Lào", "La Chí", "La Ha", "Phù Lá",
+    "La Hủ", "Lự", "Lô Lô", "Chứt", "Mảng", "Pà Thẻn", "Cờ Lao", "Cống", "Bố Y", "Si La",
     "Pu Péo", "Brâu", "Ơ Đu", "Rơ Măm"
 ];
 
-// Hàm chuyển tên thành slug (vd: "Ba Na" -> "ba-na", "H'Mông" -> "h-mong")
+// Hàm chuyển tên thành slug
 function toSlug(name) {
     return name.toLowerCase()
         .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        .replace(/đ/g, "d").replace(/Đ/g, "D")
         .replace(/'/g, "")
         .replace(/\s+/g, "-");
 }
@@ -38,64 +39,126 @@ if (!fs.existsSync(imagesDir)) fs.mkdirSync(imagesDir, { recursive: true });
 
 ethnicGroups.forEach(name => {
     const slug = toSlug(name);
-    // Bỏ qua Kinh vì đã có mẫu, nhưng tạo folder ảnh nếu chưa có
-    // User bảo "thêm cả 54... mỗi dân tộc 1 file", nên cứ tạo lại hoặc giữ nguyên Kinh cũng được.
-    // Thực tế nếu ghi đè Kinh bằng mẫu của chính nó thì không sao. Hoặc ta skip Kinh để tránh mất dữ liệu gốc nếu template là Kinh.
-    // Nhưng để nhất quán code, ta cứ chạy logic tạo folder.
-    
+
     const groupImgDir = path.join(imagesDir, slug);
     if (!fs.existsSync(groupImgDir)) {
         fs.mkdirSync(groupImgDir, { recursive: true });
-        console.log(`Đã tạo thư mục ảnh: images/${slug}`);
     }
 
-    if (slug === 'kinh') return; // Skip Kinh file generation to preserve original
+    if (slug === 'kinh') return; // Skip Kinh
 
     const fileName = `dan-toc-${slug}.html`;
     const filePath = path.join(outputDir, fileName);
 
-    // Thay thế nội dung mẫu
-    let content = template
-        .replace(/Dân Tộc Kinh/g, `Dân Tộc ${name}`)
-        .replace(/kinh\/quan-ho.jpg/g, `${slug}/main.jpg`) // Placeholder path
-        .replace(/kinh\/pho.jpg/g, `${slug}/food1.jpg`)
-        .replace(/kinh\/banh-chung.jpg/g, `${slug}/food2.jpg`)
-        .replace(/kinh\/nuoc-mam.jpg/g, `${slug}/food3.jpg`)
-        .replace(/kinh\/ao-ngu-than.jpg/g, `${slug}/costume.jpg`)
-        .replace(/kinh\/mua-roi-nuoc.jpg/g, `${slug}/art.jpg`)
-        // Thay các text cụ thể của Kinh bằng text chung
-        .replace(/"Con Rồng Cháu Tiên - Nền văn minh lúa nước rực rỡ"/g, `"Đặc trưng văn hóa dân tộc ${name}"`)
-        .replace(/>Di sản phi vật thể</g, `>Văn hóa đặc sắc<`)
-        .replace(/>Dân Ca Quan Họ Bắc Ninh</g, `>Hình ảnh minh họa<`)
-        .replace(/Thờ cúng tổ tiên là tín ngưỡng quan trọng nhất.../g, "Nội dung đang cập nhật...")
-        .replace(/Tri thức và người thầy luôn được đặt.../g, "Nội dung đang cập nhật...")
-        .replace(/"Bán anh em xa, mua láng giềng gần".../g, "Nội dung đang cập nhật...")
-        .replace(/>Phở</g, `>Món ăn 1<`)
-        .replace(/>Quốc hồn quốc túy.</g, `>Đặc sản vùng miền<`)
-        .replace(/>Bánh Chưng</g, `>Món ăn 2<`)
-        .replace(/>Linh hồn ngày Tết.</g, `>Hương vị truyền thống<`)
-        .replace(/>Nước Mắm</g, `>Món ăn 3<`)
-        .replace(/>Gia vị trứ danh.</g, `>Ẩm thực độc đáo<`)
-        .replace(/>Áo Ngũ Thân/g, `>Trang phục ${name}<`)
-        .replace(/Tiền thân của Áo Dài hiện đại.../g, "Mô tả trang phục truyền thống...")
-        .replace(/>Múa Rối Nước</g, `>Nghệ thuật ${name}<`)
-        .replace(/Loại hình nghệ thuật độc nhất vô nhị.../g, "Mô tả nghệ thuật truyền thống...")
-        // Sketchfab replacement (placeholder or remove?) - Let's keep one generic or remove
-        // .replace(/7e38e31e0ac64f43a2035aecfc32f6b2/g, "") // Remove ID specific?
-        // Better to replace the Sketchfab iframe with a placeholder image if no ID known, 
-        // but for now I will leave it pointing to the drum as a placeholder or comment it out to avoid confusion.
-        // Actually, let's keep the drum as a default "Bảo vật VN" shared by all, or replace with a generic text.
-        // I'll keep it but change title.
-        .replace(/>Trống Đồng Đông Sơn</g, `>Di sản văn hóa<`)
-        .replace(/Trống đồng \(tiêu biểu là trống Ngọc Lũ.../g, "Mô tả di sản văn hóa đặc trưng...");
+    let content = template;
 
-    // Sửa ảnh placeholder để không bị lỗi 404 xấu xí
-    content = content.replace(/src="\.\.\/images\/[^"]+"/g, 'src="https://placehold.co/600x400?text=Anh+Minh+Hoa"');
-    // Re-fix the specific replacements above which might have been overwritten if I used regex broadly.
-    // Actually the regex replace above for paths didn't change the src attribute structure, just the inner path string.
-    // Safest is to just replace all `../images/slug/xxx.jpg` with the placeholder URL for now, 
-    // OR create dummy images? Creating 54*5 dummy images is too much.
-    // I will replace the src with online placeholders for the generated files.
+    // 1. Thay thế Tên Dân Tộc (Title & H1)
+    content = content.replace(/Dân Tộc Kinh/g, `Dân Tộc ${name}`);
+
+    // 2. Thay thế Ảnh & Alt text
+    // Regex matches: src="../images/kinh/..." alt="..."
+    // We replace src with placeholder and alt with generic text
+
+    // Replace Main Image
+    content = content.replace(
+        /src="\.\.\/images\/kinh\/quan-ho\.jpg" alt="Văn hóa Quan Họ"/g,
+        `src="https://placehold.co/800x500?text=${name}" alt="Văn hóa ${name}"`
+    );
+
+    // Replace Food Images
+    content = content.replace(/src="\.\.\/images\/kinh\/pho\.jpg" alt="Phở Việt Nam"/g, `src="https://placehold.co/400x300?text=Mon+An+1" alt="Món ăn 1"`);
+    content = content.replace(/src="\.\.\/images\/kinh\/banh-chung\.jpg" alt="Bánh Chưng"/g, `src="https://placehold.co/400x300?text=Mon+An+2" alt="Món ăn 2"`);
+    content = content.replace(/src="\.\.\/images\/kinh\/nuoc-mam\.jpg" alt="Nước Mắm"/g, `src="https://placehold.co/400x300?text=Mon+An+3" alt="Món ăn 3"`);
+
+    // Replace Costume Image
+    content = content.replace(
+        /src="\.\.\/images\/kinh\/ao-ngu-than\.jpg" alt="Áo Ngũ Thân"/g,
+        `src="https://placehold.co/400x600?text=Trang+Phuc" alt="Trang phục ${name}"`
+    );
+
+    // Replace Art Image
+    content = content.replace(
+        /src="\.\.\/images\/kinh\/mua-roi-nuoc\.jpg" alt="Múa Rối Nước"/g,
+        `src="https://placehold.co/400x300?text=Nghe+Thuat" alt="Nghệ thuật ${name}"`
+    );
+
+    // Replace Religion Image
+    content = content.replace(
+        /src="\.\.\/images\/kinh\/tin-nguong\.jpg" alt="Tín Ngưỡng Thờ Mẫu"/g,
+        `src="https://placehold.co/600x400?text=Tin+Nguong" alt="Tín ngưỡng ${name}"`
+    );
+
+
+    // 3. Thay thế Nội Dung Text
+    content = content.replace(/"Con Rồng Cháu Tiên - Nền văn minh lúa nước rực rỡ"/g, `"Đặc trưng văn hóa dân tộc ${name}"`);
+    content = content.replace(/>Di sản phi vật thể</g, `>Văn hóa đặc sắc<`);
+    content = content.replace(/>Dân Ca Quan Họ Bắc Ninh</g, `>Hình ảnh minh họa<`);
+
+    // Thay thế các đoạn văn mô tả cụ thể của Kinh bằng "Nội dung đang cập nhật..."
+    // Sử dụng string cụ thể để tránh lỗi regex "..."
+
+    // Đạo Hiếu
+    content = content.replace(
+        /Thờ cúng tổ tiên là tín ngưỡng quan trọng nhất.*?<\/p>/s,
+        "Nội dung đang cập nhật...</p>"
+    );
+    // Tôn Sư Trọng Đạo
+    content = content.replace(
+        /Tri thức và người thầy luôn được đặt ở vị trí trang trọng.*?<\/p>/s,
+        "Nội dung đang cập nhật...</p>"
+    );
+    // Tình Làng Nghĩa Xóm
+    content = content.replace(
+        /"Bán anh em xa, mua láng giềng gần".*?<\/p>/s,
+        "Nội dung đang cập nhật...</p>"
+    );
+
+    // Ẩm Thực
+    content = content.replace(/>Phở</g, `>Món ăn 1<`);
+    content = content.replace(/>Quốc hồn quốc túy.</g, `>Đặc sản vùng miền<`);
+    content = content.replace(/>Bánh Chưng</g, `>Món ăn 2<`);
+    content = content.replace(/>Linh hồn ngày Tết.</g, `>Hương vị truyền thống<`);
+    content = content.replace(/>Nước Mắm</g, `>Món ăn 3<`);
+    content = content.replace(/>Gia vị trứ danh.</g, `>Ẩm thực độc đáo<`);
+
+    // Nghệ Thuật & Di Sản
+    content = content.replace(/>Áo Ngũ Thân</g, `>Trang phục ${name}<`); // H3
+    content = content.replace(/<strong>Áo Ngũ Thân:<\/strong>/g, `<strong>Trang phục ${name}:</strong>`); // Strong tag
+    content = content.replace(
+        /Tiền thân của Áo Dài hiện đại.*?<\/p>/s,
+        "Mô tả trang phục truyền thống...</p>"
+    );
+
+    content = content.replace(/>Múa Rối Nước</g, `>Nghệ thuật ${name}<`);
+    content = content.replace(
+        /Loại hình nghệ thuật độc nhất vô nhị.*?<\/p>/s,
+        "Mô tả nghệ thuật truyền thống...</p>"
+    );
+
+    // Bảo Vật Quốc Gia -> Di Sản
+    content = content.replace(/>Trống Đồng Đông Sơn</g, `>Di sản văn hóa<`);
+    content = content.replace(
+        /Trống đồng \(tiêu biểu là trống Ngọc Lũ, Hoàng Hạ\).*?<\/p>/s,
+        "Mô tả di sản văn hóa đặc trưng...</p>"
+    );
+    // Remove specific paragraph about drum meaning if present
+    content = content.replace(
+        /<p><strong class="text-\[#DAA520\]">Ý nghĩa:<\/strong> Mặt trống là hình ảnh mặt trời ở giữa.*?<\/p>/s,
+        ""
+    );
+
+    // Tín Ngưỡng
+    content = content.replace(/>Tín Ngưỡng Thờ Mẫu</g, `>Tín Ngưỡng ${name}<`);
+    content = content.replace(/"Tháng Tám giỗ Cha, tháng Ba giỗ Mẹ"/g, `"Tín ngưỡng tâm linh đặc sắc"`);
+    content = content.replace(
+        /Đạo Mẫu là tín ngưỡng bản địa của người Việt.*?<\/p>/s,
+        "Mô tả tín ngưỡng đặc trưng...</p>"
+    );
+
+    // Cleanup any remaining specific text if needed
+
+    // Fallback: Nếu ảnh nào đó chưa được replace (do khác biệt nhỏ trong template), replace src generic
+    // content = content.replace(/src="\.\.\/images\/[^"]+"/g, 'src="https://placehold.co/600x400?text=Anh+Minh+Hoa"');
 
     fs.writeFileSync(filePath, content);
     console.log(`Đã tạo: ${fileName}`);
